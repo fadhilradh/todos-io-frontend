@@ -5,24 +5,31 @@ import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import { Provider } from "react-redux";
 import { store } from "../store";
-import { Inter } from "@next/font/google";
+import { Inter as FontSans } from "@next/font/google";
 
-const inter = Inter({
+const fontSans = FontSans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
+  display: "swap",
 });
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
-      <Provider store={store}>
-        <main className={`${inter.variable} font-sans`}>
+    <>
+      <style jsx global>{`
+				:root {
+					--font-sans: ${fontSans.style.fontFamily};
+				}
+			}`}</style>
+      <SessionProvider session={session}>
+        <Provider store={store}>
           <Component {...pageProps} />
-        </main>
-      </Provider>
-    </SessionProvider>
+        </Provider>
+      </SessionProvider>
+    </>
   );
 };
 

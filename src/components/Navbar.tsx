@@ -9,7 +9,7 @@ const Navbar = () => {
             <Link href="/">Todo</Link>
           </li>
           <li className="cursor-pointer font-semibold hover:text-blue-700">
-            <Link href="/form">Users</Link>
+            <Link href="/users">Users</Link>
           </li>
         </span>
       </ul>
