@@ -11,6 +11,17 @@ const Navbar = () => {
           <li className="cursor-pointer font-semibold hover:text-blue-700">
             <Link href="/users">Users</Link>
           </li>
+          <li className="cursor-pointer font-semibold hover:text-blue-700">
+            <Link href="/socket">Socket</Link>
+          </li>
+        </span>
+        <span className="flex gap-x-6">
+          <li className="cursor-pointer font-semibold hover:text-blue-700">
+            <Link href="/login">Login</Link>
+          </li>
+          <li className="cursor-pointer font-semibold hover:text-blue-700">
+            <Link href="/register">Register</Link>
+          </li>
         </span>
       </ul>
     </nav>
