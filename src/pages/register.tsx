@@ -30,7 +30,9 @@ const RegisterPage = () => {
     <>
       <Navbar />
       <div className="flex flex-col items-center justify-center pt-20">
-        <h1 className="text-2xl">Register</h1>
+        <h1 className="bg-gradient-to-r from-blue-600 to-green-300 bg-clip-text text-2xl font-bold text-transparent">
+          Register
+        </h1>{" "}
         <form
           onSubmit={handleSubmit(onFormSubmit)}
           className="flex w-full flex-col items-center justify-center gap-4 px-4 pt-10 sm:w-1/2"

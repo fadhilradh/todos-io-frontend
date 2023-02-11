@@ -45,7 +45,7 @@ const TodoPage = () => {
       <Navbar />
       <div className="flex h-screen w-full flex-col items-center bg-[#FCFCFC] pt-20">
         <h1 className="mb-20 bg-gradient-to-r from-yellow-400 via-green-300 to-blue-600 bg-clip-text text-7xl font-bold text-transparent">
-          todos
+          todo.io
         </h1>
         <TodoInput getTodosFromDB={getTodosFromDB} />
         <TodoList todos={todos} getTodosFromDB={getTodosFromDB} ref={parent} />
