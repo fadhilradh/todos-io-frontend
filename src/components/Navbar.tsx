@@ -3,11 +3,12 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./atoms/Button";
 import { logout } from "../store/user";
+import { useTypedSelector } from "@/utils/typedStore";
 
 const Navbar = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const username = useSelector((state) => state.user.username);
-  const userRole = useSelector((state) => state.user.role);
+  const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
+  const username = useTypedSelector((state) => state.user.username);
+  const userRole = useTypedSelector((state) => state.user.role);
   const dispatch = useDispatch();
 
   async function logoutUser() {
