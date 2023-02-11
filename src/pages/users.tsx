@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "../components/atoms/Input";
 import { Button } from "../components/atoms/Button";
+import { apiCall } from "@/utils";
 
 const UsersPage = () => {
   const [usersData, setUsers] = React.useState([]);
@@ -11,9 +12,9 @@ const UsersPage = () => {
   useEffect(() => {
     async function getUsers() {
       try {
-        const users = await axios.get(
+        const users = await apiCall.get(
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/user`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/user`,
         );
         setUsers(users.data.users);
       } catch (error) {
@@ -34,11 +35,9 @@ const UsersPage = () => {
 
   async function onFormSubmit(data) {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/user`,
-        data
-      );
-      console.log(response);
+      await apiCall.post(`/user`, data);
+      const response = await apiCall.get(`/user`);
+      setUsers(response.data.users);
     } catch (error) {
       console.log(error);
     }
@@ -47,9 +46,17 @@ const UsersPage = () => {
   return (
     <>
       <Navbar />
+      <div className="flex w-full flex-col items-center">
+        <h1 className="mb-6 mt-3 text-2xl">Users List</h1>
+        {usersData?.map((user) => (
+          <p className="text-lg" key={user?.id}>
+            {user?.username}
+          </p>
+        ))}
+      </div>
       <form
         onSubmit={handleSubmit(onFormSubmit)}
-        className="flex flex-col items-center justify-center gap-4 pt-20"
+        className="flex flex-col items-center justify-center gap-4 py-20"
       >
         <h1 className="mb-10 text-2xl">Add New User</h1>
         <div className="grid grid-cols-2 gap-x-4">
@@ -86,13 +93,6 @@ const UsersPage = () => {
 
         <Button className="mt-10">Submit</Button>
       </form>
-      {/* <div>
-        {usersData?.map((user) => (
-          <p className="text-xl" key={user?.id}>
-            {user?.username}
-          </p>
-        ))}
-      </div> */}
     </>
   );
 };

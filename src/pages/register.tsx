@@ -1,3 +1,4 @@
+import { apiCall } from "@/utils";
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -14,9 +15,9 @@ const RegisterPage = () => {
 
   async function onFormSubmit(data) {
     try {
-      const response = await axios.post(
+      const response = await apiCall.post(
         `${process.env.NEXT_PUBLIC_BASE_API_URL}/register`,
-        data
+        data,
       );
       reset();
     } catch (error) {

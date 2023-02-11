@@ -1,3 +1,4 @@
+import { apiCall } from "@/utils";
 import axios from "axios";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
@@ -22,7 +23,7 @@ const TodoPage = () => {
 
   async function postNewTodo() {
     try {
-      await axios.post("http://localhost:8000/todos", {
+      await apiCall.post("http://localhost:8000/todos", {
         task: newTodo,
         isDone: false,
       });
@@ -71,14 +72,14 @@ const TodoPage = () => {
                         } else {
                           return todo;
                         }
-                      })
+                      }),
                     );
                   }}
                 />
                 <li
                   key={item.id}
                   className={clsx(
-                    item.completed && "italic text-gray-400 line-through"
+                    item.completed && "italic text-gray-400 line-through",
                   )}
                 >
                   {item.title}

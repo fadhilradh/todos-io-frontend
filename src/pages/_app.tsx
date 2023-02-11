@@ -4,8 +4,9 @@ import { SessionProvider } from "next-auth/react";
 
 import "../styles/globals.css";
 import { Provider } from "react-redux";
-import { store } from "../store";
+import { persistor, store } from "../store";
 import { Inter as FontSans } from "@next/font/google";
+import { PersistGate } from "redux-persist/integration/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -26,7 +27,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 			}`}</style>
       <SessionProvider session={session}>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <PersistGate loading={null} persistor={persistor}>
+            <Component {...pageProps} />
+          </PersistGate>
         </Provider>
       </SessionProvider>
     </>

@@ -26,6 +26,7 @@ specifiers:
   react-dom: 18.2.0
   react-hook-form: ^7.43.1
   react-redux: ^8.0.5
+  redux-persist: ^6.0.0
   socket.io: ^4.6.0
   socket.io-client: ^4.6.0
   tailwind-merge: ^1.9.1
@@ -33,6 +34,7 @@ specifiers:
   tailwindcss-animate: ^1.0.5
   typescript: ^4.9.4
   zod: ^3.20.2
+  zustand: ^4.3.3
 
 dependencies:
   '@next/font': 13.1.6
@@ -48,11 +50,13 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.43.1_react@18.2.0
   react-redux: 8.0.5_fxtgt6bjwd6p4cwoordejim2zi
+  redux-persist: 6.0.0_react@18.2.0
   socket.io: 4.6.0
   socket.io-client: 4.6.0
   tailwind-merge: 1.9.1
   tailwindcss-animate: 1.0.5_tailwindcss@3.2.4
   zod: 3.20.2
+  zustand: 4.3.3_react@18.2.0
 
 devDependencies:
   '@types/node': 18.13.0
@@ -2226,8 +2230,8 @@ packages:
       next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       oauth: 0.9.15
       openid-client: 5.4.0
-      preact: 10.12.0
-      preact-render-to-string: 5.2.6_preact@10.12.0
+      preact: 10.12.1
+      preact-render-to-string: 5.2.6_preact@10.12.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       uuid: 8.3.2
@@ -2536,17 +2540,17 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
-  /preact-render-to-string/5.2.6_preact@10.12.0:
+  /preact-render-to-string/5.2.6_preact@10.12.1:
     resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
     peerDependencies:
       preact: '>=10'
     dependencies:
-      preact: 10.12.0
+      preact: 10.12.1
       pretty-format: 3.8.0
     dev: false
 
-  /preact/10.12.0:
-    resolution: {integrity: sha512-+w8ix+huD8CNZemheC53IPjMUFk921i02o30u0K6h53spMX41y/QhVDnG/nU2k42/69tvqWmVsgNLIiwRAcmxg==}
+  /preact/10.12.1:
+    resolution: {integrity: sha512-l8386ixSsBdbreOAkqtrwqHwdvR35ID8c3rKPa8lCWuO86dBi32QWHV4vfsZK1utLLFMvw+Z5Ad4XLkZzchscg==}
     dev: false
 
   /prelude-ls/1.2.1:
@@ -2716,6 +2720,18 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+
+  /redux-persist/6.0.0_react@18.2.0:
+    resolution: {integrity: sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==}
+    peerDependencies:
+      react: '>=16'
+      redux: '>4.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /redux-thunk/2.4.2_redux@4.2.1:
     resolution: {integrity: sha512-+P3TjtnP0k/FEjcBL5FZpoovtvrTNT/UXd4/sluaSyrURlSlhLSzEdfsTBW7WsKB6yPvgd7q/iZPICFjW4o57Q==}
@@ -3238,4 +3254,20 @@ packages:
 
   /zod/3.20.2:
     resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
+    dev: false
+
+  /zustand/4.3.3_react@18.2.0:
+    resolution: {integrity: sha512-x2jXq8S0kfLGNwGh87nhRfEc2eZy37tSatpSoSIN+O6HIaBhgQHSONV/F9VNrNcBcKQu/E80K1DeHDYQC/zCrQ==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
     dev: false

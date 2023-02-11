@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const username = useSelector((state) => state.user.username);
   return (
     <nav>
       <ul className="sticky top-0 left-0 mb-4 flex w-full items-center justify-between p-4 shadow-md">
@@ -16,12 +19,18 @@ const Navbar = () => {
           </li>
         </span>
         <span className="flex gap-x-6">
-          <li className="cursor-pointer font-semibold hover:text-blue-700">
-            <Link href="/login">Login</Link>
-          </li>
-          <li className="cursor-pointer font-semibold hover:text-blue-700">
-            <Link href="/register">Register</Link>
-          </li>
+          {isLoggedIn ? (
+            <p>Hello, {username}</p>
+          ) : (
+            <>
+              <li className="cursor-pointer font-semibold hover:text-blue-700">
+                <Link href="/login">Login</Link>
+              </li>
+              <li className="cursor-pointer font-semibold hover:text-blue-700">
+                <Link href="/register">Register</Link>
+              </li>
+            </>
+          )}
         </span>
       </ul>
     </nav>
