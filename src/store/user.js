@@ -4,6 +4,7 @@ const initialState = {
   isLoggedIn: false,
   role: null,
   username: null,
+  userId: null,
 };
 
 export const userSlice = createSlice({
@@ -15,10 +16,17 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
       state.role = payload.role;
       state.username = payload.username;
+      state.userId = payload.userId;
+    },
+    logout: (state) => {
+      state.isLoggedIn = false;
+      state.role = null;
+      state.username = null;
+      state.userId = null;
     },
   },
 });
 
-export const { login } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,19 +1,26 @@
 import { apiCall } from "@/utils";
-import axios from "axios";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
 
+  const userId = useSelector((state) => state.user.userId);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   useEffect(() => {
-    getTodos();
+    if (userId) getTodosFromDB();
   }, []);
 
-  async function getTodos() {
-    axios
+  useEffect(() => {
+    if (!isLoggedIn) setTodos([]);
+  }, [isLoggedIn]);
+
+  async function getTodosFromDB() {
+    apiCall
       .get("http://localhost:8000/todos")
       .then((json) => {
         setTodos(json.data.todos.slice(0, 10));
@@ -26,9 +33,10 @@ const TodoPage = () => {
       await apiCall.post("http://localhost:8000/todos", {
         task: newTodo,
         isDone: false,
+        userId,
       });
       setNewTodo("");
-      getTodos();
+      getTodosFromDB();
     } catch (error) {
       console.error(error);
     }

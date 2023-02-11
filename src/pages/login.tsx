@@ -1,5 +1,7 @@
 import { apiCall } from "@/utils";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -17,6 +19,7 @@ const RegisterPage = () => {
   } = useForm();
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   async function onFormSubmit(data) {
     try {
@@ -26,6 +29,7 @@ const RegisterPage = () => {
       );
       reset();
       dispatch(login(userData?.data));
+      router.replace("/");
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +66,13 @@ const RegisterPage = () => {
               placeholder="Password"
             />
           </div>
-          <Button className="mt-5">Submit</Button>
+          <Button className="mt-5">Login</Button>
+          <p>
+            or{" "}
+            <Link className="underline hover:text-blue-500" href="/register">
+              create new account
+            </Link>
+          </p>
         </form>
       </div>
     </>
