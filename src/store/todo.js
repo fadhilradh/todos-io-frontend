@@ -9,7 +9,11 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, { payload }) => {
-      state.list.push(payload);
+      if (payload instanceof Array) {
+        state.list.push(...payload);
+      } else {
+        state.list.push(payload);
+      }
     },
     removeTodo: (state, { payload }) => {
       state.list = state.list.filter((todo) => todo.id !== payload.id);

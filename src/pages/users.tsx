@@ -12,10 +12,7 @@ const UsersPage = () => {
   useEffect(() => {
     async function getUsers() {
       try {
-        const users = await apiCall.get(
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/user`,
-        );
+        const users = await apiCall.get(`/user`);
         setUsers(users.data.users);
       } catch (error) {
         console.log(error);
@@ -24,8 +21,6 @@ const UsersPage = () => {
 
     void getUsers();
   }, []);
-
-  const options = ["", "Semarang", "Jakarta", "Bandung", "Medan"];
 
   const {
     register,
