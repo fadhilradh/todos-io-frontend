@@ -40,7 +40,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
     return (
       <ul
         ref={ref}
-        className="flex w-11/12 flex-col items-center justify-center sm:w-2/3"
+        className="flex w-11/12 flex-col items-center justify-center sm:w-6/12"
       >
         {todos?.length > 0 ? (
           todos?.map(({ completed, id, title }, idx) => (

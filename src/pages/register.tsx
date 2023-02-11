@@ -1,5 +1,6 @@
 import { apiCall } from "@/utils";
 import axios from "axios";
+import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "../components/atoms/Button";
@@ -34,7 +35,7 @@ const RegisterPage = () => {
           onSubmit={handleSubmit(onFormSubmit)}
           className="flex w-full flex-col items-center justify-center gap-4 px-4 pt-10 sm:w-1/2"
         >
-          <div className="flex flex-col ">
+          <div className="flex flex-col gap-y-[2px] ">
             <label className="text-sm" htmlFor="username">
               Username
             </label>
@@ -45,7 +46,7 @@ const RegisterPage = () => {
               placeholder="Username"
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-y-[2px]">
             <label className="text-sm" htmlFor="password">
               Password
             </label>
@@ -57,7 +58,13 @@ const RegisterPage = () => {
               placeholder="Password"
             />
           </div>
-          <Button className="mt-5">Submit</Button>
+          <Button className="mt-5">Register</Button>
+          <p className="text-sm">
+            Have an account ?{" "}
+            <Link className="underline hover:text-blue-500" href="/login">
+              Click here to login
+            </Link>
+          </p>
         </form>
       </div>
     </>

@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./atoms/Button";
 import { logout } from "../store/user";
 import { useTypedSelector } from "@/utils/typedStore";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
   const username = useTypedSelector((state) => state.user.username);
   const userRole = useTypedSelector((state) => state.user.role);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   async function logoutUser() {
     try {
@@ -22,7 +24,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <ul className="sticky top-0 left-0 mb-4 flex w-full items-center justify-between p-4 shadow-md">
+      <ul className="sticky top-0 left-0 flex w-full items-center justify-between bg-[#FCFCFC] p-4 shadow-md">
         <span className="flex items-center gap-x-6">
           <li className="cursor-pointer font-semibold hover:text-blue-700">
             <Link href="/">
@@ -49,13 +51,13 @@ const Navbar = () => {
               </Button>
             </div>
           ) : (
-            <>
+            !["/login", "/register"].includes(router.asPath) && (
               <Link href="/login">
-                <Button className="cursor-pointer bg-gradient-to-br from-yellow-400 to-green-300 font-semibold ">
+                <Button className="cursor-pointer  font-semibold ">
                   Login{" "}
                 </Button>
               </Link>
-            </>
+            )
           )}
         </span>
       </ul>

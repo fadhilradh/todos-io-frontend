@@ -9,7 +9,6 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
-import keranjangReducer from "./keranjang";
 import todoReducer from "./todo";
 import userReducer from "./user";
 import storage from "redux-persist/lib/storage";
@@ -21,7 +20,6 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  keranjang: keranjangReducer,
   todo: todoReducer,
   user: userReducer,
 });
