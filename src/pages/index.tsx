@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import { addTodo } from "../store/todo";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Input } from "../components/atoms/Input";
+import { Checkbox } from "../components/atoms/Checkbox";
 
 const TodoPage = () => {
   const localTodos = useSelector((state) => state.todo.list);
@@ -32,7 +33,7 @@ const TodoPage = () => {
     apiCall
       .get("/todos")
       .then(({ data }) => {
-        setTodos(data.todos);
+        setTodos(data.todos?.sort((a, b) => a.completed - b.completed));
       })
       .catch((err) => console.error(err));
   }
@@ -60,6 +61,17 @@ const TodoPage = () => {
     }
   }
 
+  async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
+    try {
+      await apiCall.patch(`/todos/${id}`, {
+        isCompleted,
+      });
+      getTodosFromDB();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -68,8 +80,8 @@ const TodoPage = () => {
           todos
         </h1>
         <Input
-          className="mb-10 w-11/12 rounded-full border-2 border-slate-100 px-6 py-2 shadow-md sm:w-5/12 "
-          placeholder="Add something to do"
+          className="mb-10 w-11/12 rounded-full border-2 border-slate-100 px-6 py-2 shadow-md sm:w-6/12 "
+          placeholder="Type something to do"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
           onKeyDown={(e) => {
@@ -96,21 +108,14 @@ const TodoPage = () => {
                 key={idx}
                 className="flex w-full items-center justify-between border-b border-gray-200 py-2"
               >
-                <span className="flex gap-x-4">
+                <span className="flex items-center gap-x-4">
                   <input
                     type="checkbox"
+                    className="w-4 cursor-pointer"
                     checked={item.completed}
-                    className="cursor-pointer"
                     onChange={() => {
-                      setTodos(
-                        todos.map((todo) => {
-                          if (item.title === todo.title) {
-                            return { ...todo, completed: !todo.completed };
-                          } else {
-                            return todo;
-                          }
-                        }),
-                      );
+                      if (isLoggedIn)
+                        updateTodoStatusInDB(item.id, item.completed);
                     }}
                   />
                   <li
