@@ -24,15 +24,19 @@ export const todoSlice = createSlice({
       state.list = state.list.filter((todo) => todo.id !== payload);
     },
     updateTodoStatus: (state, { payload: { id, completed } }) => {
-      state.list = state.list.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !completed,
-          };
-        }
-        return todo;
-      });
+      state.list = state.list
+        .map((todo) => {
+          if (todo.id === id) {
+            return {
+              ...todo,
+              completed: !completed,
+            };
+          }
+          return todo;
+        })
+        .sort((a, b) => {
+          return a.completed >= b.completed ? 1 : -1;
+        });
     },
   },
 });
