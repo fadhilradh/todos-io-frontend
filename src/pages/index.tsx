@@ -1,29 +1,37 @@
 import { apiCall } from "@/utils";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "../components/atoms/Button";
 import Navbar from "../components/Navbar";
+import { addTodo } from "../store/todo";
 
 const TodoPage = () => {
-  const [todos, setTodos] = useState([]);
+  const localTodos = useSelector((state) => state.todo.list);
+  const [todos, setTodos] = useState(localTodos);
   const [newTodo, setNewTodo] = useState("");
 
   const userId = useSelector((state) => state.user.userId);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (userId) getTodosFromDB();
+    if (isLoggedIn) getTodosFromDB();
+    else setTodos(localTodos);
+    console.log("🚀 ~ file: index.tsx:10 ~ TodoPage ~ todos", todos);
   }, []);
 
   useEffect(() => {
-    if (!isLoggedIn) setTodos([]);
-  }, [isLoggedIn]);
+    setTodos(localTodos);
+  }, [JSON.stringify(localTodos)]);
 
   async function getTodosFromDB() {
     apiCall
       .get("http://localhost:8000/todos")
       .then((json) => {
-        setTodos(json.data.todos.slice(0, 10));
+        setTodos(json.data.todos);
+        dispatch(addTodo(json.data.todos));
       })
       .catch((err) => console.error(err));
   }
@@ -56,13 +64,20 @@ const TodoPage = () => {
           onChange={(e) => setNewTodo(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && newTodo !== "") {
-              postNewTodo();
+              if (isLoggedIn) postNewTodo();
+              else
+                dispatch(
+                  addTodo({
+                    title: newTodo,
+                    completed: false,
+                  }),
+                );
               setNewTodo("");
             }
           }}
         />
         <ul className="w-11/12 sm:w-2/3">
-          {todos.map((item, idx) => (
+          {todos?.map((item, idx) => (
             <div
               key={idx}
               className="flex w-full items-center justify-between border-b border-gray-200 py-2"
@@ -93,14 +108,13 @@ const TodoPage = () => {
                   {item.title}
                 </li>
               </span>
-              <button
+              <Button
                 onClick={() =>
                   setTodos(todos.filter((todo) => todo.title !== item.title))
                 }
-                className="h-10 w-10 rounded-full bg-gray-100 p-1 text-[11px] font-semibold hover:bg-gray-400"
               >
                 Delete
-              </button>
+              </Button>
             </div>
           ))}
         </ul>

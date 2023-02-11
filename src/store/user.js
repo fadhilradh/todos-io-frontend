@@ -13,6 +13,7 @@ export const userSlice = createSlice({
   reducers: {
     // need {payload} to get the data from the action!!
     login: (state, { payload }) => {
+      console.log("🚀 ~ file: user.js:28 ~ state", state);
       state.isLoggedIn = true;
       state.role = payload.role;
       state.username = payload.username;

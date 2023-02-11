@@ -50,8 +50,7 @@ const Navbar = () => {
           ) : (
             <>
               <Link href="/login">
-                {" "}
-                <Button className="cursor-pointer font-semibold hover:text-blue-700">
+                <Button className="cursor-pointer bg-gradient-to-br from-yellow-400 to-green-300 font-semibold ">
                   Login{" "}
                 </Button>
               </Link>
