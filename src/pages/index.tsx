@@ -27,6 +27,10 @@ const TodoPage = () => {
     setTodos(localTodos);
   }, [JSON.stringify(localTodos)]);
 
+  useEffect(() => {
+    if (!isLoggedIn) setTodos(localTodos);
+  }, [isLoggedIn]);
+
   async function getTodosFromDB() {
     apiCall
       .get("/todos")
