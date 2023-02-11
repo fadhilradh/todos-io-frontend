@@ -56,7 +56,7 @@ const TodoPage = () => {
         <ul className="w-11/12 sm:w-2/3">
           {todos.map((item, idx) => (
             <div
-              key={item.title}
+              key={idx}
               className="flex w-full items-center justify-between border-b border-gray-200 py-2"
             >
               <span className="flex gap-x-4">

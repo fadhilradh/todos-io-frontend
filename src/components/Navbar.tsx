@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { Button } from "./atoms/Button";
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
@@ -20,7 +21,12 @@ const Navbar = () => {
         </span>
         <span className="flex gap-x-6">
           {isLoggedIn ? (
-            <p>Hello, {username}</p>
+            <div className="flex items-center gap-x-8">
+              <p>Hello, {username}</p>
+              <Button className="cursor-pointer  hover:text-blue-700">
+                Logout
+              </Button>
+            </div>
           ) : (
             <>
               <li className="cursor-pointer font-semibold hover:text-blue-700">
