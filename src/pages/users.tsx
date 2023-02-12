@@ -1,10 +1,17 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Input } from "../components/atoms/Input";
 import { Button } from "../components/atoms/Button";
-import { apiCall } from "@/utils";
+import { api } from "@/utils";
+import { Select } from "@radix-ui/react-select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/atoms/Select";
 
 const UsersPage = () => {
   const [usersData, setUsers] = React.useState([]);
@@ -12,27 +19,29 @@ const UsersPage = () => {
   useEffect(() => {
     async function getUsers() {
       try {
-        const users = await apiCall.get(`/user`);
-        setUsers(users.data.users);
+        const { users } = await api("get", "/user");
+        setUsers(users);
       } catch (error) {
         console.log(error);
       }
     }
 
-    void getUsers();
+    getUsers();
   }, []);
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isValid },
   } = useForm();
 
   async function onFormSubmit(data) {
+    console.log("🚀 ~ file: users.tsx:40 ~ onFormSubmit ~ data", data);
     try {
-      await apiCall.post(`/user`, data);
-      const response = await apiCall.get(`/user`);
-      setUsers(response.data.users);
+      // await api.post(`/user`, data);
+      // const response = await api.get(`/user`);
+      // setUsers(response.data.users);
     } catch (error) {
       console.log(error);
     }
@@ -77,12 +86,22 @@ const UsersPage = () => {
 
         <div className="grid grid-cols-2 gap-x-4">
           <label htmlFor="role">Role</label>
-          <Input
-            id="role"
-            className="w-56"
-            {...register("role")}
-            placeholder="admin | user"
-            type="text"
+          <Controller
+            control={control}
+            name="role"
+            render={({ field: { onChange, value, ref } }) => {
+              return (
+                <Select onValueChange={onChange}>
+                  <SelectTrigger className="w-[180px]" value={value} ref={ref}>
+                    <SelectValue placeholder="Select Role" />
+                  </SelectTrigger>
+                  <SelectContent {...register("role")}>
+                    <SelectItem value="user">User</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                  </SelectContent>
+                </Select>
+              );
+            }}
           />
         </div>
 

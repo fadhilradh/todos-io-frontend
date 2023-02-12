@@ -38,9 +38,13 @@ export const todoSlice = createSlice({
           return a.completed >= b.completed ? 1 : -1;
         });
     },
+    deleteAllLocalTodos: (state) => {
+      state.list = [];
+    },
   },
 });
 
-export const { addTodo, removeTodo, updateTodoStatus } = todoSlice.actions;
+export const { addTodo, removeTodo, updateTodoStatus, deleteAllLocalTodos } =
+  todoSlice.actions;
 
 export default todoSlice.reducer;

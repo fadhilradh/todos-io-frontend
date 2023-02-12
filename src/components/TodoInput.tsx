@@ -1,4 +1,4 @@
-import { apiCall } from "@/utils";
+import { api } from "@/utils";
 import { useTypedSelector } from "@/utils/typedStore";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -14,10 +14,12 @@ const TodoInput = ({ getTodosFromDB }) => {
 
   async function postNewTodo() {
     try {
-      await apiCall.post("/todos", {
-        task: newTodo,
-        isDone: false,
-        userId,
+      await api("post", "/todos", {
+        data: {
+          task: newTodo,
+          isDone: false,
+          userId,
+        },
       });
       setNewTodo("");
       getTodosFromDB();

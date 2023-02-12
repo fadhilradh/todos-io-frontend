@@ -1,11 +1,16 @@
-import { apiCall } from "@/utils";
-import axios from "axios";
+import { api } from "@/utils";
+import { persistTokenData } from "@/utils/auth";
+import { useTypedSelector } from "@/utils/typedStore";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Button } from "../components/atoms/Button";
 import { Input } from "../components/atoms/Input";
 import Navbar from "../components/Navbar";
+import { deleteAllLocalTodos } from "../store/todo";
+import { login } from "../store/user";
 
 const RegisterPage = () => {
   const {
@@ -15,17 +20,42 @@ const RegisterPage = () => {
     formState: { errors, isValid },
   } = useForm();
 
-  async function onFormSubmit(data) {
+  const dispatch = useDispatch();
+  const localTodos = useTypedSelector((state) => state.todo.list);
+  const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+
+  async function onFormSubmit(formData) {
     try {
-      const response = await apiCall.post(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/register`,
-        data,
-      );
+      setLoading(true);
+      const { data } = await api.post(`/register`, formData);
+      dispatch(login(data));
+      persistTokenData(data.accessToken);
       reset();
+      if (localTodos.length > 0) {
+        storeLocalTodosToDB(data);
+      }
+      router.push("/");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
+
+  async function storeLocalTodosToDB(data) {
+    try {
+      localTodos.forEach(async (todo) => {
+        await api.post("/todos", {
+          task: todo.title,
+          isDone: todo.completed,
+          userId: data?.userId,
+        });
+      });
+      dispatch(deleteAllLocalTodos());
+    } catch (error) {}
+  }
+
   return (
     <>
       <Navbar />
@@ -60,7 +90,9 @@ const RegisterPage = () => {
               placeholder="Password"
             />
           </div>
-          <Button className="mt-5">Register</Button>
+          <Button className="mt-5" isLoading={loading}>
+            Register
+          </Button>
           <p className="text-sm">
             Have an account ?{" "}
             <Link className="underline hover:text-blue-500" href="/login">

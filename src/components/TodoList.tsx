@@ -1,4 +1,4 @@
-import { apiCall } from "@/utils";
+import { api } from "@/utils";
 import { useTypedSelector } from "@/utils/typedStore";
 import clsx from "clsx";
 import React from "react";
@@ -19,8 +19,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
 
     async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
       try {
-        await apiCall.patch(`/todos/${id}`, {
-          isCompleted,
+        await api("patch", `/todos/${id}`, {
+          data: {
+            isCompleted,
+          },
         });
         getTodosFromDB();
       } catch (error) {
@@ -30,7 +32,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
 
     async function deleteTodoFromDB(id) {
       try {
-        await apiCall.delete(`/todos/${id}`);
+        await api.delete(`/todos/${id}`);
         getTodosFromDB();
       } catch (error) {
         console.error(error);

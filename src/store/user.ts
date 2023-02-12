@@ -5,6 +5,7 @@ const initialState = {
   role: null,
   username: null,
   userId: null,
+  accessToken: null,
 };
 
 export const userSlice = createSlice({
@@ -12,12 +13,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     // need {payload} to get the data from the action!!
-    login: (state, { payload }) => {
-      console.log("🚀 ~ file: user.js:28 ~ state", state);
+    login: (state, { payload: { role, username, userId, accessToken } }) => {
       state.isLoggedIn = true;
-      state.role = payload.role;
-      state.username = payload.username;
-      state.userId = payload.userId;
+      state.role = role;
+      state.username = username;
+      state.userId = userId;
+      state.accessToken = accessToken;
     },
     logout: (state) => {
       state.isLoggedIn = false;

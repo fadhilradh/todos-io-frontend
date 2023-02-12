@@ -1,4 +1,4 @@
-import { apiCall } from "@/utils";
+import { api } from "@/utils";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./atoms/Button";
@@ -15,7 +15,7 @@ const Navbar = () => {
 
   async function logoutUser() {
     try {
-      await apiCall.get("/logout");
+      await api("get", "/logout");
       dispatch(logout());
     } catch (error) {
       console.log(error);
@@ -43,12 +43,7 @@ const Navbar = () => {
           {isLoggedIn ? (
             <div className="flex items-center gap-x-8">
               <p>Hello, {username}</p>
-              <Button
-                className="cursor-pointer hover:text-blue-700"
-                onClick={logoutUser}
-              >
-                Logout
-              </Button>
+              <Button onClick={logoutUser}>Logout</Button>
             </div>
           ) : (
             !["/login", "/register"].includes(router.asPath) && (

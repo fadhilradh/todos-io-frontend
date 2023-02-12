@@ -1,4 +1,4 @@
-import { apiCall } from "@/utils";
+import { api } from "@/utils";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
@@ -32,7 +32,7 @@ const TodoPage = () => {
   }, [isLoggedIn]);
 
   async function getTodosFromDB() {
-    apiCall
+    api
       .get("/todos")
       .then(({ data }) => {
         setTodos(data.todos?.sort((a, b) => a.completed - b.completed));

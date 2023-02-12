@@ -1,5 +1,5 @@
-import { apiCall } from "@/utils";
-import axios from "axios";
+import { api } from "@/utils";
+import { persistTokenData } from "@/utils/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -23,12 +23,12 @@ const RegisterPage = () => {
 
   async function onFormSubmit(data) {
     try {
-      const userData = await apiCall.post(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/login`,
+      const userData = await api("post", "/login", {
         data,
-      );
+      });
       reset();
-      dispatch(login(userData?.data));
+      dispatch(login(userData));
+      persistTokenData(userData.accessToken);
       router.replace("/");
     } catch (error) {
       console.log(error);
