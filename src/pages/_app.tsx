@@ -1,6 +1,4 @@
 import { type AppType } from "next/app";
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
 
 import "../styles/globals.css";
 import { Provider } from "react-redux";
@@ -14,10 +12,7 @@ const fontSans = FontSans({
   display: "swap",
 });
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
     <>
       <style jsx global>{`
@@ -25,13 +20,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 					--font-sans: ${fontSans.style.fontFamily};
 				}
 			}`}</style>
-      <SessionProvider session={session}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <Component {...pageProps} />
-          </PersistGate>
-        </Provider>
-      </SessionProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Component {...pageProps} />
+        </PersistGate>
+      </Provider>
     </>
   );
 };
