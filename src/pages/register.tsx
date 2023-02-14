@@ -28,7 +28,7 @@ const RegisterPage = () => {
   async function onFormSubmit(formData) {
     try {
       setLoading(true);
-      const { data } = await api.post(`/register`, formData);
+      const data = await api("post", `/register`, { data: formData });
       dispatch(login(data));
       persistTokenData(data.accessToken);
       reset();
@@ -46,10 +46,12 @@ const RegisterPage = () => {
   async function storeLocalTodosToDB(data) {
     try {
       localTodos.forEach(async (todo) => {
-        await api.post("/todos", {
-          task: todo.title,
-          isDone: todo.completed,
-          userId: data?.userId,
+        await api("post", "/todos", {
+          data: {
+            task: todo.title,
+            isDone: todo.completed,
+            userId: data?.userId,
+          },
         });
       });
       dispatch(deleteAllLocalTodos());

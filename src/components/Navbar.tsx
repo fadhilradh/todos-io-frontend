@@ -41,8 +41,8 @@ const Navbar = () => {
         </span>
         <span className="flex gap-x-6">
           {isLoggedIn ? (
-            <div className="flex items-center gap-x-8">
-              <p>Hello, {username}</p>
+            <div className="flex items-center gap-x-4">
+              <p className="text-xs">Hello, {username}</p>
               <Button onClick={logoutUser}>Logout</Button>
             </div>
           ) : (

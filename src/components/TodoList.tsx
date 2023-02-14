@@ -32,7 +32,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
 
     async function deleteTodoFromDB(id) {
       try {
-        await api.delete(`/todos/${id}`);
+        await api("delete", `/todos/${id}`);
         getTodosFromDB();
       } catch (error) {
         console.error(error);
