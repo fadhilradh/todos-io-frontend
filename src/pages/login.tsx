@@ -2,7 +2,7 @@ import { api } from "@/utils";
 import { persistTokenData } from "@/utils/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Button } from "../components/atoms/Button";
@@ -20,9 +20,13 @@ const RegisterPage = () => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({ message: "" });
 
   async function onFormSubmit(data) {
     try {
+      setError({ message: "" });
+      setIsLoading(true);
       const userData = await api("post", "/login", {
         data,
       });
@@ -32,6 +36,9 @@ const RegisterPage = () => {
       router.replace("/");
     } catch (error) {
       console.log(error);
+      setError({ message: error.response.data.message });
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -68,7 +75,10 @@ const RegisterPage = () => {
               placeholder="Password"
             />
           </div>
-          <Button className="mt-5">Login</Button>
+          <p className="text-red-500">{error && error.message}</p>
+          <Button isLoading={isLoading} className="mt-5">
+            Login
+          </Button>
           <p className="text-sm">
             or{" "}
             <Link className="underline hover:text-blue-500" href="/register">

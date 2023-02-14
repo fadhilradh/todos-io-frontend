@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { persistor, store } from "../store";
 import { Inter as FontSans } from "@next/font/google";
 import { PersistGate } from "redux-persist/integration/react";
+import { Toaster } from "../components/Toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
           <Component {...pageProps} />
         </PersistGate>
       </Provider>
+      <Toaster />
     </>
   );
 };

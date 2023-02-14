@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "../components/atoms/Button";
 import { Input } from "../components/atoms/Input";
 import Navbar from "../components/Navbar";
+import { useToast } from "../hooks/useToast";
 import { deleteAllLocalTodos } from "../store/todo";
 import { login } from "../store/user";
 
@@ -20,13 +21,17 @@ const RegisterPage = () => {
     formState: { errors, isValid },
   } = useForm();
 
+  const { toast } = useToast();
+
   const dispatch = useDispatch();
   const localTodos = useTypedSelector((state) => state.todo.list);
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState({ message: "" });
 
   async function onFormSubmit(formData) {
     try {
+      setError({ message: "" });
       setLoading(true);
       const data = await api("post", `/register`, { data: formData });
       dispatch(login(data));
@@ -36,8 +41,13 @@ const RegisterPage = () => {
         storeLocalTodosToDB(data);
       }
       router.push("/");
-    } catch (error) {
-      console.log(error);
+      toast({
+        description: "You have successfully registered!",
+      });
+    } catch (e) {
+      console.log(e);
+      const error = e.response.data;
+      setError({ message: error.message || error.error });
     } finally {
       setLoading(false);
     }
@@ -92,6 +102,7 @@ const RegisterPage = () => {
               placeholder="Password"
             />
           </div>
+          <p className="text-center text-red-500">{error && error.message}</p>
           <Button className="mt-5" isLoading={loading}>
             Register
           </Button>

@@ -31,7 +31,6 @@ const TodoPage = () => {
     setIsLoading(true);
     api("get", "/todos")
       .then((data) => {
-        console.log("🚀 ~ file: index.tsx:37 ~ .then ~ data", data);
         setTodos(data?.todos?.sort((a, b) => a.completed - b.completed));
       })
       .catch((err) => console.error(err))

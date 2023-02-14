@@ -5,6 +5,7 @@ import { Button } from "./atoms/Button";
 import { logout } from "../store/user";
 import { useTypedSelector } from "@/utils/typedStore";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Navbar = () => {
   const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
@@ -12,13 +13,17 @@ const Navbar = () => {
   const userRole = useTypedSelector((state) => state.user.role);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   async function logoutUser() {
     try {
+      setLoading(true);
       await api("get", "/logout");
       dispatch(logout());
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -43,7 +48,12 @@ const Navbar = () => {
           {isLoggedIn ? (
             <div className="flex items-center gap-x-4">
               <p className="text-sm">Hello, {username}</p>
-              <Button size="sm" className="text-sm" onClick={logoutUser}>
+              <Button
+                size="sm"
+                className="text-sm"
+                onClick={logoutUser}
+                isLoading={loading}
+              >
                 Logout
               </Button>
             </div>
