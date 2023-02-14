@@ -1,5 +1,7 @@
 # Todo.io Fullstack App 
 
+Stack : Next.js, Typescript, Tailwind, Redux Toolkit
+
 Features :
 
 - Register and login
