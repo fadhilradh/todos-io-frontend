@@ -1,10 +1,7 @@
 import { api } from "@/utils";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
-import { addTodo, removeTodo, updateTodoStatus } from "../store/todo";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Input } from "../components/atoms/Input";
 import TodoList from "../components/TodoList";
 import TodoInput from "../components/TodoInput";
 import { useTypedSelector } from "@/utils/typedStore";
@@ -12,11 +9,10 @@ import { useTypedSelector } from "@/utils/typedStore";
 const TodoPage = () => {
   const localTodos = useTypedSelector((state) => state.todo.list);
   const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [parent] = useAutoAnimate();
   const [todos, setTodos] = useState(isLoggedIn ? [] : localTodos);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLoggedIn) getTodosFromDB();
@@ -32,12 +28,14 @@ const TodoPage = () => {
   }, [isLoggedIn]);
 
   async function getTodosFromDB() {
+    setIsLoading(true);
     api("get", "/todos")
       .then((data) => {
         console.log("🚀 ~ file: index.tsx:37 ~ .then ~ data", data);
         setTodos(data?.todos?.sort((a, b) => a.completed - b.completed));
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
+      .finally(() => setIsLoading(false));
   }
 
   return (
@@ -47,8 +45,18 @@ const TodoPage = () => {
         <h1 className="mb-20 bg-gradient-to-r from-yellow-400 via-green-300 to-blue-600 bg-clip-text text-7xl font-bold text-transparent">
           todo.io
         </h1>
-        <TodoInput getTodosFromDB={getTodosFromDB} />
-        <TodoList todos={todos} getTodosFromDB={getTodosFromDB} ref={parent} />
+        <TodoInput
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          getTodosFromDB={getTodosFromDB}
+        />
+        <TodoList
+          todos={todos}
+          getTodosFromDB={getTodosFromDB}
+          ref={parent}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
       </div>
     </>
   );

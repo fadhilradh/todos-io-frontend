@@ -43,12 +43,14 @@ const Navbar = () => {
           {isLoggedIn ? (
             <div className="flex items-center gap-x-4">
               <p className="text-xs">Hello, {username}</p>
-              <Button onClick={logoutUser}>Logout</Button>
+              <Button size="sm" className="text-sm" onClick={logoutUser}>
+                Logout
+              </Button>
             </div>
           ) : (
             !["/login", "/register"].includes(router.asPath) && (
               <Link href="/login">
-                <Button className="cursor-pointer  font-semibold ">
+                <Button size="sm" className="cursor-pointer  text-sm ">
                   Login{" "}
                 </Button>
               </Link>

@@ -10,15 +10,18 @@ import { Button } from "./atoms/Button";
 interface ITodoListProps {
   todos: Todo[];
   getTodosFromDB: () => void;
+  isLoading: false;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
-  ({ todos, getTodosFromDB }, ref) => {
+  ({ todos, getTodosFromDB, isLoading, setIsLoading }, ref) => {
     const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
     const dispatch = useDispatch();
 
     async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
       try {
+        setIsLoading(true);
         await api("patch", `/todos/${id}`, {
           data: {
             isCompleted,
@@ -27,15 +30,20 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
         getTodosFromDB();
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     async function deleteTodoFromDB(id) {
       try {
+        setIsLoading(true);
         await api("delete", `/todos/${id}`);
         getTodosFromDB();
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -76,6 +84,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                 </li>
               </span>
               <Button
+                size="sm"
                 onClick={() => {
                   if (isLoggedIn) {
                     deleteTodoFromDB(id);
