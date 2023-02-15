@@ -12,6 +12,9 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+      colors: {
+        "accent-primary": "#53A5CE",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },

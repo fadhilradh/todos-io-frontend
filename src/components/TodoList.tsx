@@ -50,7 +50,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
     return (
       <ul
         ref={ref}
-        className="flex w-11/12 flex-col items-center justify-center sm:w-6/12"
+        className="flex w-11/12 flex-col items-center justify-center md:w-9/12 lg:w-7/12 xl:w-5/12"
       >
         {todos?.length > 0 ? (
           todos?.map(({ completed, id, title }, idx) => (
@@ -77,10 +77,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                 <li
                   key={id}
                   className={clsx(
-                    "text-xl ",
+                    "text-2xl ",
                     completed
                       ? "italic text-gray-400 line-through"
-                      : "text-slate-600",
+                      : "text-slate-500",
                   )}
                 >
                   {title}
@@ -101,7 +101,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
             </div>
           ))
         ) : (
-          <p>Wow, you have nothing to do !</p>
+          <p className="text-slate-500">Wow, you have nothing to do !</p>
         )}
       </ul>
     );

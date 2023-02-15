@@ -34,10 +34,23 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
     }
   }
 
+  function postTodoConditionally() {
+    if (isLoggedIn) postNewTodo();
+    else
+      dispatch(
+        addTodo({
+          title: newTodo,
+          completed: false,
+          id: Math.random().toString(36).substr(2, 9),
+        }),
+      );
+    setNewTodo("");
+  }
+
   return (
-    <div className="relative w-full">
+    <div className="mb-10 flex w-11/12 items-center gap-x-1 md:w-9/12 lg:w-7/12 xl:w-5/12">
       <Input
-        className="mb-10 h-14 w-11/12 rounded-full border-2 border-slate-100 px-6 py-2 text-lg text-slate-600 shadow-md sm:w-7/12 "
+        className="h-14 rounded-full border-2 border-slate-100 px-6 py-2 text-xl text-slate-600 shadow-md   "
         isLoading={isLoading}
         placeholder={
           isLoading ? "Updating your todo list..." : "Type something to do"
@@ -45,27 +58,17 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
         value={isLoading ? "Updating your todo list..." : newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === "Enter" && newTodo !== "") {
-            if (isLoggedIn) postNewTodo();
-            else
-              dispatch(
-                addTodo({
-                  title: newTodo,
-                  completed: false,
-                  id: Math.random().toString(36).substr(2, 9),
-                }),
-              );
-            setNewTodo("");
+          if (e.key === "Enter") {
+            postTodoConditionally();
           }
         }}
       />
       <Button
         variant="ghost"
-        size="sm"
-        className="absolute top-2 right-[165px] h-10 rounded-full px-1 focus:ring-0 active:opacity-70"
-        onClick={postNewTodo}
+        className="h-10 rounded-full px-1 focus:ring-0 active:opacity-70"
+        onClick={postTodoConditionally}
       >
-        <ArrowRightCircle size={28} className=" text-slate-400" />
+        <ArrowRightCircle size={50} className=" text-accent-primary" />
       </Button>
     </div>
   );
