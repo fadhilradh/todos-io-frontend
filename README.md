@@ -8,7 +8,7 @@ Features :
 
 - Register and login
 - Non-login mode (data stored in localstorage)
-- Post new todo and mark todo as done
+- Post, delete and mark todo as done
 
 
 You can check the backend repo here :
