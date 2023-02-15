@@ -77,7 +77,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                 <li
                   key={id}
                   className={clsx(
-                    completed && "italic text-gray-400 line-through",
+                    "text-xl ",
+                    completed
+                      ? "italic text-gray-400 line-through"
+                      : "text-slate-600",
                   )}
                 >
                   {title}

@@ -33,7 +33,7 @@ const Navbar = () => {
         <span className="flex items-center gap-x-6">
           <li className="cursor-pointer font-semibold hover:text-blue-700">
             <Link href="/">
-              <h1 className="bg-gradient-to-r from-yellow-400 via-green-300 to-blue-600 bg-clip-text  font-bold text-transparent">
+              <h1 className="bg-gradient-to-r from-green-300  to-blue-600 bg-clip-text  font-bold text-transparent">
                 todo.io
               </h1>
             </Link>
@@ -49,7 +49,6 @@ const Navbar = () => {
             <div className="flex items-center gap-x-4">
               <p className="text-sm">Hello, {username}</p>
               <Button
-                size="sm"
                 className="text-sm"
                 onClick={logoutUser}
                 isLoading={loading}
@@ -60,9 +59,7 @@ const Navbar = () => {
           ) : (
             !["/login", "/register"].includes(router.asPath) && (
               <Link href="/login">
-                <Button size="sm" className="cursor-pointer  text-sm ">
-                  Login{" "}
-                </Button>
+                <Button className="cursor-pointer  text-sm ">Login </Button>
               </Link>
             )
           )}
