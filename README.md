@@ -1,4 +1,4 @@
-# Todo.io Fullstack App 
+# todos.io Fullstack App
 
 Stack : Next.js, Typescript, Tailwind, Redux Toolkit
 
@@ -11,5 +11,3 @@ Features :
 You can check the backend repo here :
 
 https://github.com/fadhilradh/todo-nodejs-pg
-
-

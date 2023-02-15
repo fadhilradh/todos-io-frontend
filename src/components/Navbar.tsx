@@ -34,7 +34,7 @@ const Navbar = () => {
           <li className="cursor-pointer font-semibold hover:text-blue-700">
             <Link href="/">
               <h1 className="bg-gradient-to-r from-green-300  to-blue-600 bg-clip-text  font-bold text-transparent">
-                todo.io
+                todos.io
               </h1>
             </Link>
           </li>
