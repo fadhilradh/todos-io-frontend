@@ -9,7 +9,7 @@ import { useTypedSelector } from "@/utils/typedStore";
 const TodoPage = () => {
   const localTodos = useTypedSelector((state) => state.todo.list);
   const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [parent] = useAutoAnimate();
   const [todos, setTodos] = useState(isLoggedIn ? [] : localTodos);

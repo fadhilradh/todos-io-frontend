@@ -45,7 +45,7 @@ const RegisterPage = () => {
     <>
       <Navbar />
       <div className="flex flex-col items-center justify-center pt-20">
-        <h1 className="bg-gradient-to-r from-blue-600 to-green-300 bg-clip-text text-2xl font-bold text-transparent">
+        <h1 className="bg-gradient-to-r from-blue-600 to-green-300 bg-clip-text text-4xl font-bold text-transparent">
           Login
         </h1>
         <form
@@ -80,9 +80,9 @@ const RegisterPage = () => {
             Login
           </Button>
           <p className="text-sm">
-            or{" "}
+            Don't have an account ?{" "}
             <Link className="underline hover:text-blue-500" href="/register">
-              create new account
+              Click here to register
             </Link>
           </p>
         </form>

@@ -72,7 +72,7 @@ const RegisterPage = () => {
     <>
       <Navbar />
       <div className="flex flex-col items-center justify-center pt-20">
-        <h1 className="bg-gradient-to-r from-blue-600 to-green-300 bg-clip-text text-2xl font-bold text-transparent">
+        <h1 className="bg-gradient-to-r from-blue-600 to-green-300 bg-clip-text text-4xl font-bold text-transparent">
           Register
         </h1>{" "}
         <form

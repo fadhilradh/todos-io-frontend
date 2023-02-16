@@ -1,6 +1,7 @@
 import { api } from "@/utils";
 import { useTypedSelector } from "@/utils/typedStore";
 import clsx from "clsx";
+import { LucideTrash } from "lucide-react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeTodo, updateTodoStatus } from "../store/todo";
@@ -10,7 +11,7 @@ import { Button } from "./atoms/Button";
 interface ITodoListProps {
   todos: Todo[];
   getTodosFromDB: () => void;
-  isLoading: false;
+  isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 }
 
@@ -56,7 +57,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
           todos?.map(({ completed, id, title }, idx) => (
             <div
               key={idx}
-              className="flex w-full items-center justify-between border-b border-gray-200 py-2"
+              className="mb-4 flex w-full items-center justify-between border-b border-gray-200 pt-2 pb-4"
             >
               <span className="flex items-center gap-x-4">
                 <input
@@ -96,7 +97,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                   }
                 }}
               >
-                Delete
+                <LucideTrash />
               </Button>
             </div>
           ))
