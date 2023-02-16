@@ -1,9 +1,9 @@
 # todos.io Fullstack App
 
-### Open for Contributions  
-#### Check Roadmap below to get ideas where to start contributing
+## Open for Contributions  
+### Check Roadmap below to get ideas where to start contributing
 
-Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
+### Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
 
 Live : https://todos-io.vercel.app
 
