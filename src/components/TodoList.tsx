@@ -57,7 +57,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
           todos?.map(({ completed, id, title }, idx) => (
             <div
               key={idx}
-              className="flex w-full items-center justify-between border-b border-gray-200 py-2"
+              className="mb-4 flex w-full items-center justify-between border-b border-gray-200 pt-2 pb-4"
             >
               <span className="flex items-center gap-x-4">
                 <input

@@ -48,14 +48,14 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
   }
 
   return (
-    <div className="mb-10 flex w-11/12 items-center gap-x-1 md:w-9/12 lg:w-7/12 xl:w-5/12">
+    <div className="mb-24 flex w-11/12 items-center gap-x-1 md:w-9/12 lg:w-7/12 xl:w-5/12">
       <Input
-        className="h-14 rounded-full border-2 border-slate-100 px-6 py-2 text-xl text-slate-600 shadow-md   "
+        className="h-14 rounded-full border-2 border-slate-100 px-6 py-2 text-2xl text-accent-primary shadow-md focus:ring-[6px]   "
         isLoading={isLoading}
         placeholder={
-          isLoading ? "Updating your todo list..." : "Type something to do"
+          isLoading ? "updating your todo list..." : "Type something to do"
         }
-        value={isLoading ? "Updating your todo list..." : newTodo}
+        value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
@@ -68,7 +68,7 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
         className="h-10 rounded-full px-1 focus:ring-0 active:opacity-70"
         onClick={postTodoConditionally}
       >
-        <ArrowRightCircle size={50} className=" text-accent-primary" />
+        <ArrowRightCircle size={80} className=" text-accent-primary" />
       </Button>
     </div>
   );
