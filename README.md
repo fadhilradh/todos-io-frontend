@@ -3,9 +3,8 @@
 ## Open for Contributions  
 ### Check Roadmap below to get ideas where to start contributing
 
-### Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
-
 Live : https://todos-io.vercel.app
+Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
 
 Features :
 
