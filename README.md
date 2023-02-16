@@ -25,6 +25,7 @@ Roadmap :
 - [ ] Upgrade to `react-query`, `rtk-query` or `swc` for data fetching
 - [ ] Add PWA support
 - [ ] Use `next-auth` for storing token instead of localstorage
+- [ ] Add dark mode
 
 Interested in the backend implementation? Here is the repo :
 https://github.com/fadhilradh/todo.io-backend
