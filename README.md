@@ -3,7 +3,7 @@
 ![image](https://user-images.githubusercontent.com/74446624/219507095-453547ea-dcba-432d-a0ea-b9de2196abbf.png)
 
 ## Open for Contributions  
-### Check Roadmap below to get ideas where to start contributing
+### Check What to Contribute and Roadmap sections below to get ideas where to start contributing
 
 Live : https://todos-io.vercel.app
 
@@ -16,9 +16,19 @@ Features :
 - Post, delete and mark todo as done
 - Smooth animations 
 
-Roadmap :
+## What to Contribute 
 
-- [x] UI Improvement
+You can contribute on any of these category :
+
+- UI improvement
+- Code / component refactoring
+- New feature
+- Bug fixing
+- Performance improvement
+- Best practice application
+
+## Roadmap :
+
 - [ ] Patch todo
 - [ ] Login and register form validation
 - [ ] Reorder todo (drag and drop)
