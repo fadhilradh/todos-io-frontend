@@ -24,6 +24,6 @@ Roadmap :
 - [ ] Use `next-auth` for storing token instead of localstorage
 
 Interested in the backend implementation? Here is the repo :
-https://github.com/fadhilradh/todo-nodejs-pg
+https://github.com/fadhilradh/todo.io-backend
 
 Happy contributing !
