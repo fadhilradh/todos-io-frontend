@@ -1,4 +1,4 @@
-# todos.io Fullstack App. Friendly project for beginners in Open Source community
+# todos.io Fullstack App
 
 ### Open for Contributions 
 
