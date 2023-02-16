@@ -22,7 +22,9 @@ Roadmap :
 - [ ] Add types to all component props
 - [ ] Upgrade to `react-query`, `rtk-query` or `swc` for data fetching
 - [ ] Add PWA support
-- [ ] Use next-auth for storing token instead of localstorage
+- [ ] Use `next-auth` for storing token instead of localstorage
 
 You can check the backend repo here :
 https://github.com/fadhilradh/todo-nodejs-pg
+
+Happy contributing !
