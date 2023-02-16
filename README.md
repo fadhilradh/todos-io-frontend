@@ -1,4 +1,4 @@
-# todos.io Fullstack App
+# todos.io Fullstack App : Frontend
 
 ## Open for Contributions  
 ### Check Roadmap below to get ideas where to start contributing
@@ -23,7 +23,7 @@ Roadmap :
 - [ ] Add PWA support
 - [ ] Use `next-auth` for storing token instead of localstorage
 
-You can check the backend repo here :
+Interested in the backend implementation? Here is the repo :
 https://github.com/fadhilradh/todo-nodejs-pg
 
 Happy contributing !
