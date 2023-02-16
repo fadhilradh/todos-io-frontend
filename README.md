@@ -3,6 +3,8 @@
 ## Open for Contributions  
 ### Check Roadmap below to get ideas where to start contributing
 
+![image](https://user-images.githubusercontent.com/74446624/219502999-33b9a159-cffb-4adf-92c3-58abd8d2fcd1.png)
+
 Live : https://todos-io.vercel.app
 
 Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
