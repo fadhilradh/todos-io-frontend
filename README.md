@@ -1,6 +1,6 @@
 # todos.io Fullstack App
 
-### Open for contributions, just Fork the repo and submit your PR !
+### Open for contributions, just fork the repo and submit your PR !
 
 Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
 
@@ -15,7 +15,9 @@ Features :
 Roadmap :
 
 - [x] UI Improvement
-- [ ]
+- [ ] Patch todo
+- [ ] Login and register form validation
+- [ ] Reorder todo (drag and drop)
 
 You can check the backend repo here :
 https://github.com/fadhilradh/todo-nodejs-pg
