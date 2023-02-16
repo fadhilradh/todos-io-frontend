@@ -14,6 +14,7 @@ Features :
 - Register and login
 - Non-login mode (data stored in localstorage)
 - Post, delete and mark todo as done
+- Smooth animations 
 
 Roadmap :
 
