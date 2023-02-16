@@ -1,6 +1,10 @@
 # todos.io Fullstack App
 
-### Open for contributions, just fork the repo and submit your PR !
+### Open for contributions 
+### Steps :
+### 1. Fork the repo 
+### 2. Clone, modify then commit your changes to main branc
+### 3. submit your PR !
 
 Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
 
