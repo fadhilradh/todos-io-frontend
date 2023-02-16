@@ -1,6 +1,7 @@
 # todos.io Fullstack App
 
-### Open for Contributions 
+### Open for Contributions  
+### Check Roadmap below to get ideas where to start contributing
 
 Stack : Next.js, Typescript, Tailwind, Redux Toolkit & Persist
 
