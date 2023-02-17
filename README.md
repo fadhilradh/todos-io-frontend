@@ -21,7 +21,11 @@ Features :
 1. Install dependencies using pnpm:
 
 ```sh
-pnpm install
+pnpm i
+\\ or
+yarn
+\\ or
+npm i
 ```
 
 2. Copy `.env.example` to `.env.local`.
@@ -34,6 +38,10 @@ cp .env.example .env.local
 
 ```sh
 pnpm dev
+\\ or
+yarn dev
+\\ or
+npm run dev
 ```
 
 
