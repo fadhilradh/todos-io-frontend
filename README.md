@@ -18,7 +18,7 @@ Features :
 
 ## Running Locally
 
-1. Install dependencies using pnpm:
+1. Install dependencies using package manager:
 
 ```sh
 pnpm i
