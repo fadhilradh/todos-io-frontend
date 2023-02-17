@@ -1,24 +1,36 @@
 import { api } from "@/utils";
 import { useTypedSelector } from "@/utils/typedStore";
 import clsx from "clsx";
-import { LucideTrash } from "lucide-react";
+import {
+  LucideCheck,
+  LucideCross,
+  LucideEdit,
+  LucideEdit2,
+  LucideTrash,
+  LucideX,
+} from "lucide-react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeTodo, updateTodoStatus } from "../store/todo";
 import { Todo } from "../types/todos";
 import { Button } from "./atoms/Button";
+import { Input } from "./atoms/Input";
 
 interface ITodoListProps {
   todos: Todo[];
   getTodosFromDB: () => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  setTodos: (todos: Todo[]) => void;
 }
 
 const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
-  ({ todos, getTodosFromDB, isLoading, setIsLoading }, ref) => {
+  ({ todos, getTodosFromDB, isLoading, setTodos, setIsLoading }, ref) => {
     const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
     const dispatch = useDispatch();
+    const [isEditingIds, setIsEditingIds] = React.useState([]);
+    console.log("🚀 ~ file: TodoList.tsx:32 ~ isEditingIds", isEditingIds);
+    const [editedTodo, setEditedTodo] = React.useState("");
 
     async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
       try {
@@ -48,6 +60,23 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
       }
     }
 
+    async function updateTodo(todoId: string, title: string) {
+      try {
+        setIsLoading(true);
+        await api("patch", `/todos/title/${todoId}`, {
+          data: {
+            title,
+          },
+        });
+        setIsEditingIds(isEditingIds.filter((id) => todoId !== id));
+        getTodosFromDB();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
     return (
       <ul
         ref={ref}
@@ -60,45 +89,97 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
               className="mb-4 flex w-full items-center justify-between border-b border-gray-200 pt-2 pb-4"
             >
               <span className="flex items-center gap-x-4">
-                <input
-                  type="checkbox"
-                  className="w-4 cursor-pointer"
-                  checked={completed}
-                  onChange={() => {
-                    if (isLoggedIn) updateTodoStatusInDB(id, completed);
-                    else
-                      dispatch(
-                        updateTodoStatus({
-                          id: id,
-                          completed: completed,
+                {!isEditingIds.includes(id) && (
+                  <input
+                    type="checkbox"
+                    className="w-4 cursor-pointer"
+                    checked={completed}
+                    onChange={() => {
+                      if (isLoggedIn) updateTodoStatusInDB(id, completed);
+                      else
+                        dispatch(
+                          updateTodoStatus({
+                            id: id,
+                            completed: completed,
+                          }),
+                        );
+                    }}
+                  />
+                )}
+                {isEditingIds.includes(id) ? (
+                  <Input
+                    className=" text-2xl text-slate-500"
+                    wrapperClassName="w-10/12"
+                    defaultValue={title}
+                    value={title}
+                    onChange={(e) => {
+                      setEditedTodo(e.target.value);
+                      setTodos(
+                        todos.map((todo) => {
+                          if (todo.id === id) {
+                            todo.title = e.target.value;
+                          }
+                          return todo;
                         }),
                       );
-                  }}
-                />
-                <li
-                  key={id}
-                  className={clsx(
-                    "text-2xl ",
-                    completed
-                      ? "italic text-gray-400 line-through"
-                      : "text-slate-500",
-                  )}
-                >
-                  {title}
-                </li>
+                    }}
+                  />
+                ) : (
+                  <li
+                    key={id}
+                    className={clsx(
+                      "text-2xl ",
+                      completed
+                        ? "italic text-gray-400 line-through"
+                        : "text-slate-500",
+                    )}
+                  >
+                    {title}
+                  </li>
+                )}
               </span>
-              <Button
-                size="sm"
-                onClick={() => {
-                  if (isLoggedIn) {
-                    deleteTodoFromDB(id);
-                  } else {
-                    dispatch(removeTodo(id));
-                  }
-                }}
-              >
-                <LucideTrash />
-              </Button>
+              {isEditingIds.includes(id) ? (
+                <span className="flex gap-x-2">
+                  <Button
+                    className="bg-gradient-to-br from-blue-400 to-green-400 "
+                    size="sm"
+                    onClick={() => updateTodo(id, editedTodo)}
+                  >
+                    <LucideCheck />
+                  </Button>
+                  <Button
+                    className="bg-gradient-to-br from-red-400 to-green-400"
+                    size="sm"
+                    onClick={() =>
+                      setIsEditingIds(isEditingIds.filter((i) => i !== id))
+                    }
+                  >
+                    <LucideX />
+                  </Button>
+                </span>
+              ) : (
+                <span className="flex gap-x-2">
+                  <Button
+                    className="bg-gradient-to-br from-blue-400 to-green-400 "
+                    size="sm"
+                    onClick={() => setIsEditingIds([...isEditingIds, id])}
+                  >
+                    <LucideEdit2 />
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      if (isLoggedIn) {
+                        deleteTodoFromDB(id);
+                      } else {
+                        dispatch(removeTodo(id));
+                      }
+                    }}
+                  >
+                    <LucideTrash />
+                  </Button>
+                </span>
+              )}
             </div>
           ))
         ) : (

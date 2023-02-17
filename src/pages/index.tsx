@@ -51,6 +51,7 @@ const TodoPage = () => {
         />
         <TodoList
           todos={todos}
+          setTodos={setTodos}
           getTodosFromDB={getTodosFromDB}
           ref={parent}
           isLoading={isLoading}
