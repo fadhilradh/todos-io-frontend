@@ -1,17 +1,10 @@
 import { api } from "@/utils";
 import { useTypedSelector } from "@/utils/typedStore";
 import clsx from "clsx";
-import {
-  LucideCheck,
-  LucideCross,
-  LucideEdit,
-  LucideEdit2,
-  LucideTrash,
-  LucideX,
-} from "lucide-react";
+import { LucideCheck, LucideEdit2, LucideTrash, LucideX } from "lucide-react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { removeTodo, updateTodoStatus } from "../store/todo";
+import { removeTodo, updateTodo as updateTodoLocally } from "../store/todo";
 import { Todo } from "../types/todos";
 import { Button } from "./atoms/Button";
 import { Input } from "./atoms/Input";
@@ -29,7 +22,6 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
     const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
     const dispatch = useDispatch();
     const [isEditingIds, setIsEditingIds] = React.useState([]);
-    console.log("🚀 ~ file: TodoList.tsx:32 ~ isEditingIds", isEditingIds);
     const [editedTodo, setEditedTodo] = React.useState("");
 
     async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
@@ -61,6 +53,11 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
     }
 
     async function updateTodo(todoId: string, title: string) {
+      if (!isLoggedIn) {
+        dispatch(updateTodoLocally({ id: todoId, title }));
+        setIsEditingIds(isEditingIds.filter((id) => todoId !== id));
+        return;
+      }
       try {
         setIsLoading(true);
         await api("patch", `/todos/title/${todoId}`, {
@@ -98,7 +95,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                       if (isLoggedIn) updateTodoStatusInDB(id, completed);
                       else
                         dispatch(
-                          updateTodoStatus({
+                          updateTodoLocally({
                             id: id,
                             completed: completed,
                           }),
@@ -117,7 +114,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                       setTodos(
                         todos.map((todo) => {
                           if (todo.id === id) {
-                            todo.title = e.target.value;
+                            return {
+                              ...todo,
+                              title: e.target.value,
+                            };
                           }
                           return todo;
                         }),

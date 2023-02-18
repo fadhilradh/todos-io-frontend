@@ -13,6 +13,7 @@ const TodoPage = () => {
 
   const [parent] = useAutoAnimate();
   const [todos, setTodos] = useState(isLoggedIn ? [] : localTodos);
+  console.log("🚀 ~ file: index.tsx:16 ~ TodoPage ~ todos", todos);
 
   useEffect(() => {
     if (isLoggedIn) getTodosFromDB();
