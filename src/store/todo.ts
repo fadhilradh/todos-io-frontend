@@ -23,13 +23,18 @@ export const todoSlice = createSlice({
     removeTodo: (state, { payload }) => {
       state.list = state.list.filter((todo) => todo.id !== payload);
     },
-    updateTodoStatus: (state, { payload: { id, completed } }) => {
+    updateTodo: (state, { payload: { id, completed, title } }) => {
+      console.log("🚀 ~ file: todo.ts:27 ~ id", id);
+      console.log("🚀 ~ file: todo.ts:27 ~ title", title);
+      console.log("🚀 ~ file: todo.ts:46 ~ completed", completed);
+
       state.list = state.list
         .map((todo) => {
           if (todo.id === id) {
             return {
               ...todo,
-              completed: !completed,
+              ...(completed !== undefined && { completed: !completed }),
+              ...(title && { title }),
             };
           }
           return todo;
@@ -44,7 +49,7 @@ export const todoSlice = createSlice({
   },
 });
 
-export const { addTodo, removeTodo, updateTodoStatus, deleteAllLocalTodos } =
+export const { addTodo, removeTodo, updateTodo, deleteAllLocalTodos } =
   todoSlice.actions;
 
 export default todoSlice.reducer;
