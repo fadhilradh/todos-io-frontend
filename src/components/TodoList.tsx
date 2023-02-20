@@ -105,7 +105,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                 )}
                 {isEditingIds.includes(id) ? (
                   <Input
-                    className=" text-2xl text-slate-500"
+                    className="text-lg text-slate-500"
                     wrapperClassName="w-10/12"
                     defaultValue={title}
                     value={title}
@@ -128,7 +128,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                   <li
                     key={id}
                     className={clsx(
-                      "text-2xl ",
+                      "text-lg ",
                       completed
                         ? "italic text-gray-400 line-through"
                         : "text-slate-500",
