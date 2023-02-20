@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/74446624/219507095-453547ea-dcba-432d-a0ea-b9de2196abbf.png)
 
-## Open for Contributions  
+## Open for Contributions 
 ### Check What to Contribute and Roadmap sections below to get ideas where to start contributing
 
 Live : https://todos-io.vercel.app
@@ -54,7 +54,7 @@ You can contribute on any of these category :
 - New feature
 - Bug fixing
 - Performance improvement
-- Best practice application
+- Best practice implementation
 
 ## Feature / Improvement Roadmap :
 
