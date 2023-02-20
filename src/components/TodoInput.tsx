@@ -50,7 +50,7 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
   return (
     <div className="mb-24 flex w-11/12 items-center gap-x-1 md:w-9/12 lg:w-7/12 xl:w-5/12">
       <Input
-        className="h-14  rounded-full border-2 border-slate-100 px-6 py-2 text-2xl text-accent-primary shadow-md focus:ring-[6px]   "
+        className="h-14 rounded-full border-2 border-slate-100 px-6 py-2 text-lg text-accent-primary shadow-md focus:ring-[6px]   "
         isLoading={isLoading}
         placeholder={
           isLoading ? "updating your todo list..." : "Type something to do"
