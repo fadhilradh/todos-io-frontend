@@ -39,7 +39,7 @@ const Navbar = () => {
             </Link>
           </li>
           {userRole === "admin" && (
-            <li className="cursor-pointer font-semibold hover:text-blue-700">
+            <li className="cursor-pointer text-sm font-semibold text-accent-primary hover:text-blue-700">
               <Link href="/users">Users</Link>
             </li>
           )}
