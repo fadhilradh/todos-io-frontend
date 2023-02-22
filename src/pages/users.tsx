@@ -34,19 +34,28 @@ const UsersPage = () => {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Username",
+        Header: "Task",
         accessor: "col1",
       },
       {
-        Header: "Task",
+        Header: "Username",
         accessor: "col2",
+      },
+      {
+        Header: "Completed",
+        accessor: "col3",
       },
     ],
     [],
   );
 
   const data = React.useMemo(
-    () => usersData.map((user) => ({ col1: user.username, col2: user.task })),
+    () =>
+      usersData.map((user) => ({
+        col1: user.task,
+        col2: user.username,
+        col3: `${user.is_done}`,
+      })),
     [JSON.stringify(usersData)],
   );
 
