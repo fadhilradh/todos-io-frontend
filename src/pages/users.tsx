@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Input } from "../components/atoms/Input";
@@ -12,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/atoms/Select";
+import Table from "../components/Table";
 
 const UsersPage = () => {
   const [usersData, setUsers] = React.useState([]);
@@ -29,19 +29,32 @@ const UsersPage = () => {
     getUsers();
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors, isValid },
-  } = useForm();
+  const { register, handleSubmit, control } = useForm();
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Username",
+        accessor: "col1",
+      },
+      {
+        Header: "Task",
+        accessor: "col2",
+      },
+    ],
+    [],
+  );
+
+  const data = React.useMemo(
+    () => usersData.map((user) => ({ col1: user.username, col2: user.task })),
+    [JSON.stringify(usersData)],
+  );
 
   async function onFormSubmit(data) {
-    console.log("🚀 ~ file: users.tsx:40 ~ onFormSubmit ~ data", data);
     try {
-      // await api.post(`/user`, data);
-      // const response = await api.get(`/user`);
-      // setUsers(response.data.users);
+      await api("post", `/user`, { data });
+      const response = await api("get", `/user`);
+      setUsers(response.data.users);
     } catch (error) {
       console.log(error);
     }
@@ -51,13 +64,10 @@ const UsersPage = () => {
     <>
       <Navbar />
       <div className="flex w-full flex-col items-center">
-        <h1 className="mb-6 mt-3 text-2xl">Users List</h1>
-        {usersData?.map((user) => (
-          <p className="text-lg" key={user?.id}>
-            {user?.username}
-          </p>
-        ))}
+        <h1 className="mb-6 mt-3 text-2xl">Users & Task List</h1>
+        <Table columns={columns} data={data} />
       </div>
+
       <form
         onSubmit={handleSubmit(onFormSubmit)}
         className="flex flex-col items-center justify-center gap-4 py-20"

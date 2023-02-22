@@ -1,0 +1,53 @@
+/* Table */
+.table {
+  @apply rounded-bl-md rounded-br-md bg-white !px-4;
+}
+
+.table thead {
+  border-bottom: 1px solid #d9dbdd;
+  border-top: 1px solid #d9dbdd;
+}
+
+.table th {
+  @apply bg-slate-300 px-2 py-4 text-left;
+}
+
+.table tr td {
+  @apply py-3 px-2;
+}
+
+.table tr td:first-child,
+.table tr th:first-child {
+  @apply pl-4;
+}
+
+.table tr td:last-child,
+.table tr th:last-child {
+  @apply pr-4;
+}
+
+.table tr:last-child td:first-child {
+  @apply rounded-bl-md;
+}
+
+.table tr:last-child td:last-child {
+  @apply rounded-br-md;
+}
+
+.table tr:not(:last-child) {
+  border-bottom: 1px solid #d9dbdd;
+}
+
+.tableHeader {
+  @apply flex flex-wrap	items-center justify-between rounded-tl-md rounded-tr-md bg-white px-6 py-4;
+}
+
+.tableFooter {
+  @apply py-2;
+}
+
+/* TableLoading */
+.tableLoading {
+  @apply flex w-full items-center justify-center;
+  min-height: 400px;
+}
