@@ -53,7 +53,6 @@ const TodoPage = () => {
           setTodos={setTodos}
           getTodosFromDB={getTodosFromDB}
           ref={parent}
-          isLoading={isLoading}
           setIsLoading={setIsLoading}
         />
       </div>

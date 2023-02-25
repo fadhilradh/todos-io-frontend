@@ -101,8 +101,7 @@ const Profile = () => {
   return (
     <div>
       <Navbar />
-
-      <div className="flex h-screen w-full flex-col items-center justify-center gap-y-3">
+      <div className="flex h-screen w-full flex-col items-center gap-y-3 !py-12">
         <Image
           alt="profile pic"
           src={userProfilePic || EmptyProfilePic}
@@ -163,7 +162,7 @@ const Profile = () => {
           <Button isLoading={isLoading}>Update Profile</Button>
         </form>
         <Link href="/">
-          <Button variant="ghost" className="mt-10" disabled={isLoading}>
+          <Button variant="ghost" className="my-10" disabled={isLoading}>
             Back to Home
           </Button>
         </Link>
