@@ -2,4 +2,5 @@
 module.exports = {
   plugins: [require.resolve("prettier-plugin-tailwindcss")],
   trailingComma: "all",
+  semi: false,
 };

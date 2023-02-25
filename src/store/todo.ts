@@ -24,10 +24,6 @@ export const todoSlice = createSlice({
       state.list = state.list.filter((todo) => todo.id !== payload);
     },
     updateTodo: (state, { payload: { id, completed, title } }) => {
-      console.log("🚀 ~ file: todo.ts:27 ~ id", id);
-      console.log("🚀 ~ file: todo.ts:27 ~ title", title);
-      console.log("🚀 ~ file: todo.ts:46 ~ completed", completed);
-
       state.list = state.list
         .map((todo) => {
           if (todo.id === id) {
