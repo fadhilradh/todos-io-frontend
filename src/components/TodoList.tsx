@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux"
 import { removeTodo, updateTodo as updateTodoLocally } from "../store/todo"
 import { Todo } from "../types/todos"
 import { Button } from "./atoms/Button"
+import { Checkbox } from "./atoms/Checkbox"
 import { Input } from "./atoms/Input"
 
 interface ITodoListProps {
@@ -86,11 +87,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
             >
               <span className="flex items-center gap-x-4">
                 {!isEditingIds.includes(id) && (
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     className="w-4 cursor-pointer"
                     checked={completed}
-                    onChange={() => {
+                    onCheckedChange={() => {
                       if (isLoggedIn) updateTodoStatusInDB(id, completed)
                       else
                         dispatch(
@@ -130,7 +130,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                       "text-lg ",
                       completed
                         ? "italic text-gray-400 line-through"
-                        : "text-slate-500",
+                        : "text-accent-primary",
                     )}
                   >
                     {title}
