@@ -1,31 +1,54 @@
-import { api } from "@/utils";
-import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "./atoms/Button";
-import { logout } from "../store/user";
-import { useTypedSelector } from "@/utils/typedStore";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { api } from "@/utils"
+import Link from "next/link"
+import { useDispatch, useSelector } from "react-redux"
+import { Button } from "./atoms/Button"
+import { logout } from "../store/user"
+import { useTypedSelector } from "@/utils/typedStore"
+import { useRouter } from "next/router"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./atoms/Dropdown"
+import { Avatar, AvatarFallback, AvatarImage } from "./atoms/Avatar"
+import { getTokenData, removeTokenData } from "@/utils/auth"
+import React from "react"
+import { useToast } from "../hooks/useToast"
 
 const Navbar = () => {
-  const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
-  const username = useTypedSelector((state) => state.user.username);
-  const userRole = useTypedSelector((state) => state.user.role);
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const userRole = useTypedSelector((state) => state.user.role),
+    userId = useTypedSelector((state) => state.user.userId),
+    userName = useTypedSelector((state) => state.user.username),
+    userToken = getTokenData(),
+    dispatch = useDispatch(),
+    router = useRouter(),
+    currentURL = new URL(window.location.href),
+    isExpired = currentURL.searchParams.get("expired"),
+    { toast } = useToast(),
+    userProfilePic = useTypedSelector((state) => state.user.profilePic)
 
   async function logoutUser() {
     try {
-      setLoading(true);
-      await api("get", "/logout");
-      dispatch(logout());
+      await api("get", "/logout")
+      dispatch(logout())
+      removeTokenData()
+      router.replace("/")
     } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+      console.log(error)
     }
   }
+
+  React.useEffect(() => {
+    if (isExpired) {
+      toast({
+        title: "Your session has expired",
+        description: "Please login again",
+        variant: "destructive",
+      })
+    }
+  }, [])
 
   return (
     <nav>
@@ -44,18 +67,31 @@ const Navbar = () => {
             </li>
           )}
         </span>
+
         <span className="flex gap-x-6">
-          {isLoggedIn ? (
-            <div className="flex items-center gap-x-6">
-              <p className=" text-accent-primary">Hello, {username}</p>
-              <Button
-                className="text-sm"
-                onClick={logoutUser}
-                isLoading={loading}
-              >
-                Logout
-              </Button>
-            </div>
+          {userToken ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src={userProfilePic} />
+                  <AvatarFallback>
+                    {userName?.slice(0, 2)?.toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" sideOffset={20}>
+                <DropdownMenuItem className="!hover:bg-transparent cursor-default">
+                  Hello, {userName} !
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href={`/profile/${userId}`}>Edit Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-400" onClick={logoutUser}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             !["/login", "/register"].includes(router.asPath) && (
               <Link href="/login">
@@ -66,7 +102,7 @@ const Navbar = () => {
         </span>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

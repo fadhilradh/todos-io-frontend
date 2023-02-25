@@ -1,55 +1,53 @@
-import { api } from "@/utils";
-import { persistTokenData } from "@/utils/auth";
-import { useTypedSelector } from "@/utils/typedStore";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { Button } from "../components/atoms/Button";
-import { Input } from "../components/atoms/Input";
-import Navbar from "../components/Navbar";
-import { useToast } from "../hooks/useToast";
-import { deleteAllLocalTodos } from "../store/todo";
-import { login } from "../store/user";
+import { api } from "@/utils"
+import { persistTokenData } from "@/utils/auth"
+import { useTypedSelector } from "@/utils/typedStore"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import React from "react"
+import { useForm } from "react-hook-form"
+import { useDispatch } from "react-redux"
+import { Button } from "../components/atoms/Button"
+import { Input } from "../components/atoms/Input"
+import Navbar from "../components/Navbar"
+import { useToast } from "../hooks/useToast"
+import { deleteAllLocalTodos } from "../store/todo"
+import { login } from "../store/user"
 
 const RegisterPage = () => {
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm();
-
-  const { toast } = useToast();
-
-  const dispatch = useDispatch();
-  const localTodos = useTypedSelector((state) => state.todo.list);
-  const router = useRouter();
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState({ message: "" });
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors, isValid },
+    } = useForm(),
+    { toast } = useToast(),
+    dispatch = useDispatch(),
+    localTodos = useTypedSelector((state) => state.todo.list),
+    router = useRouter(),
+    [loading, setLoading] = React.useState(false),
+    [error, setError] = React.useState({ message: "" })
 
   async function onFormSubmit(formData) {
     try {
-      setError({ message: "" });
-      setLoading(true);
-      const data = await api("post", `/register`, { data: formData });
-      dispatch(login(data));
-      persistTokenData(data.accessToken);
-      reset();
+      setError({ message: "" })
+      setLoading(true)
+      const data = await api("post", `/register`, { data: formData })
+      dispatch(login(data))
+      persistTokenData(data.accessToken)
+      reset()
       if (localTodos.length > 0) {
-        storeLocalTodosToDB(data);
+        storeLocalTodosToDB(data)
       }
-      router.push("/");
+      router.push("/")
       toast({
         description: "You have successfully registered!",
-      });
+      })
     } catch (e) {
-      console.log(e);
-      const error = e.response.data;
-      setError({ message: error.message || error.error });
+      console.log(e)
+      const error = e.response.data
+      setError({ message: error.message || error.error })
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -62,9 +60,9 @@ const RegisterPage = () => {
             isDone: todo.completed,
             userId: data?.userId,
           },
-        });
-      });
-      dispatch(deleteAllLocalTodos());
+        })
+      })
+      dispatch(deleteAllLocalTodos())
     } catch (error) {}
   }
 
@@ -115,7 +113,7 @@ const RegisterPage = () => {
         </form>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage

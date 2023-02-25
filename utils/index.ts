@@ -2,7 +2,7 @@ import axios, { AxiosPromise, AxiosRequestConfig, Method } from "axios";
 import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { getTokenData } from "./auth";
+import { getTokenData, removeTokenData } from "./auth";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -39,6 +39,13 @@ export async function api<T>(
     const response = await request();
     return response.data;
   } catch (e) {
+    if (
+      e.response?.status === 401 &&
+      e.response?.data?.error === "Token has expired"
+    ) {
+      removeTokenData();
+      window.location.href = "/login?expired=true";
+    }
     throw e;
   }
 }

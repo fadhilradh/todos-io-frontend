@@ -1,44 +1,43 @@
-import { api } from "@/utils";
-import { persistTokenData } from "@/utils/auth";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { Button } from "../components/atoms/Button";
-import { Input } from "../components/atoms/Input";
-import Navbar from "../components/Navbar";
-import { login } from "../store/user";
+import { api } from "@/utils"
+import { persistTokenData } from "@/utils/auth"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import React, { useState } from "react"
+import { useForm } from "react-hook-form"
+import { useDispatch } from "react-redux"
+import { Button } from "../components/atoms/Button"
+import { Input } from "../components/atoms/Input"
+import Navbar from "../components/Navbar"
+import { login } from "../store/user"
 
 const RegisterPage = () => {
   const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm();
-
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({ message: "" });
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors, isValid },
+    } = useForm(),
+    dispatch = useDispatch(),
+    router = useRouter(),
+    [isLoading, setIsLoading] = useState(false),
+    [error, setError] = useState({ message: "" })
 
   async function onFormSubmit(data) {
     try {
-      setError({ message: "" });
-      setIsLoading(true);
+      setError({ message: "" })
+      setIsLoading(true)
       const userData = await api("post", "/login", {
         data,
-      });
-      reset();
-      dispatch(login(userData));
-      persistTokenData(userData.accessToken);
-      router.replace("/");
+      })
+      reset()
+      dispatch(login(userData))
+      persistTokenData(userData.accessToken)
+      router.replace("/")
     } catch (error) {
-      console.log(error);
-      setError({ message: error.response.data.message });
+      console.log(error)
+      setError({ message: error.response.data.message })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
   return (
@@ -88,7 +87,7 @@ const RegisterPage = () => {
         </form>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage

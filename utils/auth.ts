@@ -5,5 +5,12 @@ export function persistTokenData(tokenData) {
 }
 
 export function getTokenData() {
-  return JSON.parse(window.localStorage.getItem(AUTH_STORAGE_KEY)) ?? {};
+  const token = window.localStorage.getItem(AUTH_STORAGE_KEY);
+  return token
+    ? JSON.parse(window.localStorage.getItem(AUTH_STORAGE_KEY))
+    : null;
+}
+
+export function removeTokenData() {
+  window.localStorage.setItem(AUTH_STORAGE_KEY, "");
 }

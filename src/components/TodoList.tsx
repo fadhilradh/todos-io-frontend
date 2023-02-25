@@ -1,76 +1,75 @@
-import { api } from "@/utils";
-import { useTypedSelector } from "@/utils/typedStore";
-import clsx from "clsx";
-import { LucideCheck, LucideEdit2, LucideTrash, LucideX } from "lucide-react";
-import React from "react";
-import { useDispatch } from "react-redux";
-import { removeTodo, updateTodo as updateTodoLocally } from "../store/todo";
-import { Todo } from "../types/todos";
-import { Button } from "./atoms/Button";
-import { Input } from "./atoms/Input";
+import { api } from "@/utils"
+import { useTypedSelector } from "@/utils/typedStore"
+import clsx from "clsx"
+import { LucideCheck, LucideEdit2, LucideTrash, LucideX } from "lucide-react"
+import React from "react"
+import { useDispatch } from "react-redux"
+import { removeTodo, updateTodo as updateTodoLocally } from "../store/todo"
+import { Todo } from "../types/todos"
+import { Button } from "./atoms/Button"
+import { Input } from "./atoms/Input"
 
 interface ITodoListProps {
-  todos: Todo[];
-  getTodosFromDB: () => void;
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
-  setTodos: (todos: Todo[]) => void;
+  todos: Todo[]
+  getTodosFromDB: () => void
+  setIsLoading: (isLoading: boolean) => void
+  setTodos: (todos: Todo[]) => void
 }
 
 const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
-  ({ todos, getTodosFromDB, isLoading, setTodos, setIsLoading }, ref) => {
-    const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
-    const dispatch = useDispatch();
-    const [isEditingIds, setIsEditingIds] = React.useState([]);
-    const [editedTodo, setEditedTodo] = React.useState("");
+  ({ todos, getTodosFromDB, setTodos, setIsLoading }, ref) => {
+    const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn),
+      dispatch = useDispatch(),
+      [isEditingIds, setIsEditingIds] = React.useState([]),
+      [editedTodo, setEditedTodo] = React.useState("")
 
     async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
       try {
-        setIsLoading(true);
+        setIsLoading(true)
         await api("patch", `/todos/${id}`, {
           data: {
             isCompleted,
           },
-        });
-        getTodosFromDB();
+        })
+        getTodosFromDB()
       } catch (error) {
-        console.error(error);
+        console.error(error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
 
     async function deleteTodoFromDB(id) {
       try {
-        setIsLoading(true);
-        await api("delete", `/todos/${id}`);
-        getTodosFromDB();
+        setIsLoading(true)
+        await api("delete", `/todos/${id}`)
+        getTodosFromDB()
       } catch (error) {
-        console.error(error);
+        console.error(error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
 
     async function updateTodo(todoId: string, title: string) {
       if (!isLoggedIn) {
-        dispatch(updateTodoLocally({ id: todoId, title }));
-        setIsEditingIds(isEditingIds.filter((id) => todoId !== id));
-        return;
+        dispatch(updateTodoLocally({ id: todoId, title }))
+        setIsEditingIds(isEditingIds.filter((id) => todoId !== id))
+        return
       }
       try {
-        setIsLoading(true);
+        setIsLoading(true)
         await api("patch", `/todos/title/${todoId}`, {
           data: {
             title,
           },
-        });
-        setIsEditingIds(isEditingIds.filter((id) => todoId !== id));
-        getTodosFromDB();
+        })
+        setIsEditingIds(isEditingIds.filter((id) => todoId !== id))
+        getTodosFromDB()
       } catch (error) {
-        console.error(error);
+        console.error(error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     }
 
@@ -92,14 +91,14 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                     className="w-4 cursor-pointer"
                     checked={completed}
                     onChange={() => {
-                      if (isLoggedIn) updateTodoStatusInDB(id, completed);
+                      if (isLoggedIn) updateTodoStatusInDB(id, completed)
                       else
                         dispatch(
                           updateTodoLocally({
                             id: id,
                             completed: completed,
                           }),
-                        );
+                        )
                     }}
                   />
                 )}
@@ -110,18 +109,18 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                     defaultValue={title}
                     value={title}
                     onChange={(e) => {
-                      setEditedTodo(e.target.value);
+                      setEditedTodo(e.target.value)
                       setTodos(
                         todos.map((todo) => {
                           if (todo.id === id) {
                             return {
                               ...todo,
                               title: e.target.value,
-                            };
+                            }
                           }
-                          return todo;
+                          return todo
                         }),
-                      );
+                      )
                     }}
                   />
                 ) : (
@@ -170,9 +169,9 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                     size="sm"
                     onClick={() => {
                       if (isLoggedIn) {
-                        deleteTodoFromDB(id);
+                        deleteTodoFromDB(id)
                       } else {
-                        dispatch(removeTodo(id));
+                        dispatch(removeTodo(id))
                       }
                     }}
                   >
@@ -186,8 +185,8 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
           <p className="text-slate-500">Wow, you have nothing to do !</p>
         )}
       </ul>
-    );
+    )
   },
-);
+)
 
-export default TodoList;
+export default TodoList

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   isLoggedIn: false,
@@ -6,29 +6,38 @@ const initialState = {
   username: null,
   userId: null,
   accessToken: null,
-};
+  profilePic: "",
+}
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     // need {payload} to get the data from the action!!
-    login: (state, { payload: { role, username, userId, accessToken } }) => {
-      state.isLoggedIn = true;
-      state.role = role;
-      state.username = username;
-      state.userId = userId;
-      state.accessToken = accessToken;
+    login: (
+      state,
+      { payload: { role, username, userId, accessToken, profilePicUrl } },
+    ) => {
+      state.isLoggedIn = true
+      state.role = role
+      state.username = username
+      state.userId = userId
+      state.accessToken = accessToken
+      state.profilePic = profilePicUrl
     },
     logout: (state) => {
-      state.isLoggedIn = false;
-      state.role = null;
-      state.username = null;
-      state.userId = null;
+      state.isLoggedIn = false
+      state.role = null
+      state.username = null
+      state.userId = null
+      state.profilePic = ""
+    },
+    changeProfilePic: (state, { payload }) => {
+      state.profilePic = payload
     },
   },
-});
+})
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, changeProfilePic } = userSlice.actions
 
-export default userSlice.reducer;
+export default userSlice.reducer

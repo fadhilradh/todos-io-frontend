@@ -1,41 +1,40 @@
-import { api } from "@/utils";
-import { useTypedSelector } from "@/utils/typedStore";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "../store/todo";
-import { Button } from "./atoms/Button";
-import { Input } from "./atoms/Input";
-import { ArrowRightCircle } from "lucide-react";
+import { api } from "@/utils"
+import { useTypedSelector } from "@/utils/typedStore"
+import React, { useState } from "react"
+import { useDispatch } from "react-redux"
+import { addTodo } from "../store/todo"
+import { Button } from "./atoms/Button"
+import { Input } from "./atoms/Input"
+import { ArrowRightCircle } from "lucide-react"
 
 const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
-  const [newTodo, setNewTodo] = useState("");
-  const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn);
-  const userId = useTypedSelector((state) => state.user.userId);
-
-  const dispatch = useDispatch();
+  const [newTodo, setNewTodo] = useState(""),
+    isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn),
+    userId = useTypedSelector((state) => state.user.userId),
+    dispatch = useDispatch()
 
   async function postNewTodo() {
-    if (!newTodo) return;
+    if (!newTodo) return
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       await api("post", "/todos", {
         data: {
           task: newTodo,
           isDone: false,
           userId,
         },
-      });
-      setNewTodo("");
-      getTodosFromDB();
+      })
+      setNewTodo("")
+      getTodosFromDB()
     } catch (error) {
-      console.error(error);
+      console.error(error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   function postTodoConditionally() {
-    if (isLoggedIn) postNewTodo();
+    if (isLoggedIn) postNewTodo()
     else
       dispatch(
         addTodo({
@@ -43,8 +42,8 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
           completed: false,
           id: Math.random().toString(36).substr(2, 9),
         }),
-      );
-    setNewTodo("");
+      )
+    setNewTodo("")
   }
 
   return (
@@ -59,7 +58,7 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
         onChange={(e) => setNewTodo(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            postTodoConditionally();
+            postTodoConditionally()
           }
         }}
       />
@@ -71,7 +70,7 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
         <ArrowRightCircle size={80} className=" text-accent-primary" />
       </Button>
     </div>
-  );
-};
+  )
+}
 
-export default TodoInput;
+export default TodoInput

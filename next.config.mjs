@@ -7,6 +7,14 @@
 
 /** @type {import("next").NextConfig} */
 const config = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_IMAGE_HOST,
+      },
+    ],
+  },
   // reactStrictMode: true,
 
   /**
@@ -27,5 +35,5 @@ const config = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-};
-export default config;
+}
+export default config
