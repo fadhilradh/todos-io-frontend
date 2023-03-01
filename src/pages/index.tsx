@@ -5,26 +5,28 @@ import { useAutoAnimate } from "@formkit/auto-animate/react"
 import TodoList from "../components/TodoList"
 import TodoInput from "../components/TodoInput"
 import { useTypedSelector } from "@/utils/typedStore"
+import { getTokenData } from "@/utils/auth"
 
 const TodoPage = () => {
   const localTodos = useTypedSelector((state) => state.todo.list),
-    isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn),
     [isLoading, setIsLoading] = useState<boolean>(false),
     [parent] = useAutoAnimate(),
-    [todos, setTodos] = useState(isLoggedIn ? [] : localTodos)
-
-  useEffect(() => {
-    if (isLoggedIn) getTodosFromDB()
-    else setTodos(localTodos)
-  }, [])
+    [token, setToken] = useState(""),
+    [todos, setTodos] = useState(token ? [] : localTodos)
 
   useEffect(() => {
     setTodos(localTodos)
   }, [JSON.stringify(localTodos)])
 
   useEffect(() => {
-    if (!isLoggedIn) setTodos(localTodos)
-  }, [isLoggedIn])
+    if (!token) setTodos(localTodos)
+    else getTodosFromDB()
+  }, [token])
+
+  useEffect(() => {
+    const userToken = getTokenData()
+    setToken(userToken)
+  }, [])
 
   async function getTodosFromDB() {
     setIsLoading(true)

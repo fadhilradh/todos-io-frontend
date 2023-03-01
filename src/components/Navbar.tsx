@@ -34,7 +34,8 @@ const Navbar = () => {
       await api("get", "/logout")
       dispatch(logout())
       removeTokenData()
-      router.replace("/")
+      if (router.asPath === "/") router.reload()
+      else router.replace("/")
     } catch (error) {
       console.log(error)
     }
