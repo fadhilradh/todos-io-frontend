@@ -22,7 +22,8 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
     const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn),
       dispatch = useDispatch(),
       [isEditingIds, setIsEditingIds] = React.useState([]),
-      [editedTodo, setEditedTodo] = React.useState("")
+      [editedTodos, setEditedTodos] = React.useState([])
+    console.log("🚀 ~ file: TodoList.tsx:26 ~ editedTodos:", editedTodos)
 
     async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
       try {
@@ -90,6 +91,7 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                   <Checkbox
                     className="w-4 cursor-pointer"
                     checked={completed}
+                    title={`Mark as ${completed ? "incomplete" : "complete"}`}
                     onCheckedChange={() => {
                       if (isLoggedIn) updateTodoStatusInDB(id, completed)
                       else
@@ -106,10 +108,11 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                   <Input
                     className="text-lg text-slate-500"
                     wrapperClassName="w-10/12"
-                    defaultValue={title}
                     value={title}
                     onChange={(e) => {
-                      setEditedTodo(e.target.value)
+                      if (!editedTodos.includes(id)) {
+                        setEditedTodos([...editedTodos, id])
+                      }
                       setTodos(
                         todos.map((todo) => {
                           if (todo.id === id) {
@@ -142,7 +145,16 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                   <Button
                     className="bg-gradient-to-br from-blue-400 to-green-400 "
                     size="sm"
-                    onClick={() => updateTodo(id, editedTodo)}
+                    disabled={!editedTodos.includes(id)}
+                    onClick={() => {
+                      const todoTitle = todos.filter(
+                        (todo) => todo.id === id,
+                      )[0].title
+                      updateTodo(id, todoTitle)
+                      setEditedTodos(
+                        editedTodos.filter((editedId) => editedId !== id),
+                      )
+                    }}
                   >
                     <LucideCheck />
                   </Button>
@@ -161,11 +173,14 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
                   <Button
                     className="bg-gradient-to-br from-blue-400 to-green-400 "
                     size="sm"
+                    title="Edit todo"
                     onClick={() => setIsEditingIds([...isEditingIds, id])}
                   >
                     <LucideEdit2 />
                   </Button>
                   <Button
+                    className="bg-gradient-to-tr from-green-400 to-red-400"
+                    title="Delete todo"
                     size="sm"
                     onClick={() => {
                       if (isLoggedIn) {
