@@ -1,6 +1,6 @@
 # todos.io Fullstack App : Frontend
 
-![image](https://user-images.githubusercontent.com/74446624/222988499-16dc3a35-bae3-43f1-9d1a-b894d62595ee.png)
+![image](https://user-images.githubusercontent.com/74446624/222988522-5324eff4-fe2d-4a2e-b80e-7330ac628ea7.png)
 
 ## Open for Contributions 
 ### Check What to Contribute and Roadmap sections below to get ideas where to start contributing
