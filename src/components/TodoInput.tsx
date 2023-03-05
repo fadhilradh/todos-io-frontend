@@ -47,9 +47,9 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
   }
 
   return (
-    <div className="mb-24 flex w-11/12 items-center gap-x-1 md:w-9/12 lg:w-7/12 xl:w-5/12">
+    <div className="mb-12 flex flex w-11/12 flex-col items-center gap-x-1 md:w-9/12 lg:w-7/12 xl:w-5/12">
       <Input
-        className="h-14 rounded-full border-2 border-slate-100 px-6 py-2 text-lg text-accent-primary shadow-md focus:ring-[6px]   "
+        className="h-12 rounded-full border-2 border-slate-100 px-6 py-2 text-lg text-accent-primary  shadow-md shadow-accent-primary placeholder:text-accent-primary"
         isLoading={isLoading}
         placeholder={
           isLoading ? "updating your todo list..." : "Type something to do"
@@ -62,13 +62,11 @@ const TodoInput = ({ getTodosFromDB, isLoading, setIsLoading }) => {
           }
         }}
       />
-      <Button
-        variant="ghost"
-        className="h-10 rounded-full px-1 shadow-none focus:ring-0 active:opacity-70"
-        onClick={postTodoConditionally}
-      >
-        <ArrowRightCircle size={80} className=" text-accent-primary" />
-      </Button>
+      {newTodo && (
+        <p className="mt-3 text-sm text-accent-primary">
+          Press Enter or &#9166; to add task
+        </p>
+      )}
     </div>
   )
 }
