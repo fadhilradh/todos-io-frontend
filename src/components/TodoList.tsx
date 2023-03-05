@@ -4,6 +4,7 @@ import clsx from "clsx"
 import { LucideCheck, LucideEdit2, LucideTrash, LucideX } from "lucide-react"
 import React from "react"
 import { useDispatch } from "react-redux"
+import { useToast } from "../hooks/useToast"
 import { removeTodo, updateTodo as updateTodoLocally } from "../store/todo"
 import { Todo } from "../types/todos"
 import { Button } from "./atoms/Button"
@@ -22,8 +23,8 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
     const isLoggedIn = useTypedSelector((state) => state.user.isLoggedIn),
       dispatch = useDispatch(),
       [isEditingIds, setIsEditingIds] = React.useState([]),
-      [editedTodos, setEditedTodos] = React.useState([])
-    console.log("🚀 ~ file: TodoList.tsx:26 ~ editedTodos:", editedTodos)
+      [editedTodos, setEditedTodos] = React.useState([]),
+      { toast } = useToast()
 
     async function updateTodoStatusInDB(id: string, isCompleted: boolean) {
       try {
@@ -32,6 +33,13 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
           data: {
             isCompleted,
           },
+        })
+        toast({
+          description: `Successfully marked as ${
+            isCompleted ? "incomplete" : " "
+          }`,
+          color: "",
+          duration: 2000,
         })
         getTodosFromDB()
       } catch (error) {
@@ -45,6 +53,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
       try {
         setIsLoading(true)
         await api("delete", `/todos/${id}`)
+        toast({
+          description: "Todo successfully deleted",
+          duration: 2000,
+        })
         getTodosFromDB()
       } catch (error) {
         console.error(error)
@@ -57,6 +69,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
       if (!isLoggedIn) {
         dispatch(updateTodoLocally({ id: todoId, title }))
         setIsEditingIds(isEditingIds.filter((id) => todoId !== id))
+        toast({
+          description: "Todo successfully edited",
+          duration: 2000,
+        })
         return
       }
       try {
@@ -68,6 +84,10 @@ const TodoList = React.forwardRef<HTMLUListElement, ITodoListProps>(
         })
         setIsEditingIds(isEditingIds.filter((id) => todoId !== id))
         getTodosFromDB()
+        toast({
+          description: "Todo successfully edited",
+          duration: 2000,
+        })
       } catch (error) {
         console.error(error)
       } finally {
