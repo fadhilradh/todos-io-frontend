@@ -59,6 +59,7 @@ You can contribute on any of these category :
 ## Feature / Improvement Roadmap :
 
 - [x] Edit todo
+- [X] Upload and edit profile picture
 - [ ] Login and register form validation
 - [ ] Reorder todo (drag and drop)
 - [ ] Add types to all component props
