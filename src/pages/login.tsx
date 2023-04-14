@@ -52,14 +52,14 @@ const RegisterPage = () => {
           className="flex w-full flex-col items-center justify-center gap-4 px-4 pt-10 sm:w-1/2"
         >
           <div className="flex flex-col gap-y-1">
-            <label className="text-sm" htmlFor="username">
-              Username
+            <label className="text-sm" htmlFor="email">
+              Email
             </label>
             <Input
-              id="username"
+              id="email"
               className="w-56"
-              {...register("username")}
-              placeholder="Username"
+              {...register("email")}
+              placeholder="email"
             />
           </div>
           <div className="flex flex-col gap-y-1">
